@@ -1,0 +1,30 @@
+{
+  "id": "1422909",
+  "name": "QQMiniTest",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1898647",
+      "name": "code-fork",
+      "font_class": "code-fork",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "7471008",
+      "name": "Star",
+      "font_class": "Star",
+      "unicode": "e6c3",
+      "unicode_decimal": 59075
+    },
+    {
+      "icon_id": "7588096",
+      "name": "警告",
+      "font_class": "jinggao",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    }
+  ]
+}
