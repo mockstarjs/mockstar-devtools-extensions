@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'antd';
+import { Button, Card, Input } from 'antd';
 
 import './index.less';
 
@@ -10,14 +10,21 @@ class PageDetail extends Component {
   };
 
   render() {
-    const id = this.props.match.params.id + '';
+    const id = this.props.match.params.id;
     const { list } = this.props;
 
     return (
       <div className="page-detail">
         <Button onClick={this.gotoHome}>返回</Button>
-        <div>xxx={id}</div>
-        <div>{JSON.stringify(list[id], null, 2)}</div>
+
+        <Card title={`请求列表序号：${parseInt(id) + 1} 的详细信息`} bordered={false} style={{ width: '50%' }}>
+          <Input.TextArea
+            value={JSON.stringify(list[id], null, 2)}
+            placeholder="Controlled autosize"
+            autoSize={{ minRows: 3 }}
+          />
+        </Card>
+
       </div>
     );
   }
