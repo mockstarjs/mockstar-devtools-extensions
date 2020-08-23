@@ -17,7 +17,7 @@ class PageDetail extends Component {
       <div className="page-detail">
         <Button onClick={this.gotoHome}>返回</Button>
 
-        <Card title={`请求列表序号：${parseInt(id) + 1} 的详细信息`} bordered={false} style={{ width: '50%' }}>
+        <Card title={`请求列表序号：${parseInt(id) + 1} 的详细信息`} bordered={false} style={{ width: '30%' }}>
           <Input.TextArea
             value={JSON.stringify(list[id], null, 2)}
             placeholder="Controlled autosize"
