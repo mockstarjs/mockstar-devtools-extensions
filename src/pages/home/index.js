@@ -19,10 +19,10 @@ class PageHome extends Component {
           bordered
           dataSource={list}
           renderItem={(item, index) => (
-            <List.Item key={index}>
-              <div onClick={() => {
-                this.gotoDetail(index);
-              }}>
+            <List.Item key={index} onClick={() => {
+              this.gotoDetail(index);
+            }}>
+              <div>
                 <Tag>{index + 1}</Tag>
                 <Tag color={item.request.method === 'GET' ? '#2db7f5' : '#87d068'}>{item.request.method}</Tag>
                 <span>{item.request.url}</span>

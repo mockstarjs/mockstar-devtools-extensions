@@ -1,29 +1,72 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, Input } from 'antd';
+import { Button, Card, Input, Tree, Row, Col } from 'antd';
+
+import { createFolderTree } from './business';
 
 import './index.less';
 
 class PageDetail extends Component {
+  constructor(...props) {
+    super(...props);
+
+    this.state = {
+      selectedTreeKey: '0-0'
+    };
+  }
+
   gotoHome = () => {
     this.props.history.push(`/`);
+  };
+
+  handleSelectTree = (keys, event) => {
+    console.log('Trigger Select', keys, event);
+
+    this.setState({
+      selectedTreeKey: keys[0]
+    });
   };
 
   render() {
     const id = this.props.match.params.id;
     const { list } = this.props;
+    const { selectedTreeKey } = this.state;
+
+    const treeData = createFolderTree(list[id]);
 
     return (
       <div className="page-detail">
         <Button onClick={this.gotoHome}>返回</Button>
 
-        <Card title={`请求列表序号：${parseInt(id) + 1} 的详细信息`} bordered={false} style={{ width: '30%' }}>
-          <Input.TextArea
-            value={JSON.stringify(list[id], null, 2)}
-            placeholder="Controlled autosize"
-            autoSize={{ minRows: 3 }}
-          />
-        </Card>
+        <Row>
+          <Col span={8}>
+            <Card title={`请求列表序号：${parseInt(id) + 1} 的详细信息`} bordered={false}>
+              <Input.TextArea
+                value={JSON.stringify(list[id], null, 2)}
+                placeholder="Controlled autosize"
+                autoSize={{ minRows: 3 }}
+              />
+            </Card>
+          </Col>
+
+          <Col span={8}>
+            <Tree.DirectoryTree
+              defaultExpandAll
+              onSelect={this.handleSelectTree}
+              treeData={treeData}
+            />
+          </Col>
+
+          <Col span={8}>
+            <Card title={`请求列表序号：${parseInt(id) + 1} 内容`} bordered={false}>
+              <Input.TextArea
+                value={selectedTreeKey}
+                placeholder="Controlled autosize"
+                autoSize={{ minRows: 3 }}
+              />
+            </Card>
+          </Col>
+        </Row>
 
       </div>
     );
@@ -34,7 +77,7 @@ function mapStateToProps(state) {
   const { networkInfo } = state;
 
   return {
-    list: networkInfo.list,
+    list: networkInfo.list
   };
 }
 
