@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button } from 'antd';
 
 import './index.less';
 
 class PageDetail extends Component {
-  constructor(...props) {
-    super(...props);
-  }
+  gotoHome = () => {
+    this.props.history.push(`/`);
+  };
 
   render() {
-    const appId = this.props.match.params.id + '';
+    const id = this.props.match.params.id + '';
+    const { list } = this.props;
+
     return (
       <div className="page-detail">
-        <div>xxx={appId}</div>
+        <Button onClick={this.gotoHome}>返回</Button>
+        <div>xxx={id}</div>
+        <div>{JSON.stringify(list[id], null, 2)}</div>
       </div>
     );
   }
@@ -22,7 +27,7 @@ function mapStateToProps(state) {
   const { networkInfo } = state;
 
   return {
-    list: networkInfo,
+    list: networkInfo.list,
   };
 }
 

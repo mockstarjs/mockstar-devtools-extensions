@@ -1,9 +1,9 @@
 import { ADD_IN_NETWORK_LIST } from './action';
 
-import { data1 } from './mock';
+import { dataGet, dataPost } from './mock';
 
 const initialState = {
-  list: [data1],
+  list: [dataGet, dataPost],
 };
 
 export default function networkInfo(state = initialState, action) {

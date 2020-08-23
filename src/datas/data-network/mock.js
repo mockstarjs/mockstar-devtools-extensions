@@ -1,5 +1,6 @@
-const data1 = {
+const dataGet = {
   request: {
+    method: 'GET',
     resourceType: 'xhr',
     url: 'https://now.qq.com/cgi-bin/now/pc/user/get_user_follow_ts?bkn=1418269854&_=0.2717764620560481',
   },
@@ -9,4 +10,16 @@ const data1 = {
   },
 };
 
-export { data1 };
+const dataPost = {
+  request: {
+    method: 'POST',
+    resourceType: 'xhr',
+    url: "https://live.rtc.qq.com:8687/api/uploadlog",
+  },
+  response: {
+    body: '{"errode":0,"errmsg":"succ!"}',
+    status: 200,
+  },
+};
+
+export { dataGet,dataPost };

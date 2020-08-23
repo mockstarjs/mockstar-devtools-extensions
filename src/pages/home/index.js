@@ -1,19 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'antd';
-
+import { List, Tag } from 'antd';
 import './index.less';
 
 class PageHome extends Component {
+  gotoDetail = (id) => {
+    this.props.history.push(`/detail/${id}`);
+  };
 
   render() {
     const { list } = this.props;
 
     return (
       <div className="page-home">
-        <h1>hello!</h1>
-        <Button>xxxxx</Button>
-        <div>{JSON.stringify(list, null, 2)}</div>
+        <List
+          header={<div>所有的 xhr 请求</div>}
+          footer={<div>总共{list.length}条数据</div>}
+          bordered
+          dataSource={list}
+          renderItem={(item, index) => (
+            <List.Item key={index}>
+              <div onClick={() => {
+                this.gotoDetail(index);
+              }}>
+                <Tag>{index + 1}</Tag>
+                <Tag color={item.request.method === 'GET' ? '#2db7f5' : '#87d068'}>{item.request.method}</Tag>
+                <span>{item.request.url}</span>
+              </div>
+            </List.Item>
+          )}
+        />
       </div>
     );
   }
