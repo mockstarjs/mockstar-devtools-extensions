@@ -58,7 +58,7 @@ class PageDetail extends Component {
           </Col>
 
           <Col span={8}>
-            <Card title={`请求列表序号：${parseInt(id) + 1} 内容`} bordered={false}>
+            <Card title={`${selectedTreeKey} 文件内容`} bordered={false}>
               <Input.TextArea
                 value={selectedTreeKey}
                 placeholder="Controlled autosize"
