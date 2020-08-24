@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Card, Col, Input, Row, Tabs, Tree } from 'antd';
 
-import { createFolderTree } from './business';
+import { createFolderTree, downloadSampleCode } from './business';
 
 import './index.less';
 
@@ -25,6 +25,20 @@ class PageDetail extends Component {
     this.setState({
       selectedTreeKey: keys[0],
     });
+  };
+
+  handleDownload = (treeNode) => {
+    if (!treeNode) {
+      console.log('treeNode is undefined!');
+      return;
+    }
+
+    if (!treeNode.isLeaf) {
+      console.log('treeNode is not isLeaf!');
+      return;
+    }
+
+    downloadSampleCode(treeNode.content, treeNode.title);
   };
 
   render() {
@@ -59,7 +73,11 @@ class PageDetail extends Component {
               </Col>
 
               <Col span={16}>
-                <Card title={`${treeNode && treeNode.path || ''}`} bordered={false}>
+                <Card title={`${treeNode && treeNode.path || '请选择'}`}
+                      extra={<Button type="primary" onClick={() => {
+                        this.handleDownload(treeNode);
+                      }}>下载</Button>}
+                >
                   <Input.TextArea
                     value={treeNode && treeNode.content}
                     placeholder="点击左侧目录树查看文件内容"
