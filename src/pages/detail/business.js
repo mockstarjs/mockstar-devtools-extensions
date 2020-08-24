@@ -78,6 +78,18 @@ function createFolderTree(network) {
   const treeNodeMockModulesSuccessOtherConfigJson = getTreeNodeMockModulesSuccessOtherConfigJson(network, treeNodeMap);
   treeNodeMap[treeNodeMockModulesSuccessOtherConfigJson.key] = treeNodeMockModulesSuccessOtherConfigJson;
 
+  // mocker/mock_modules/error_100000
+  const treeNodeFolderMockModulesError100000 = getTreeNodeFolder('mockModulesError100000', 'error_100000', `${treeNodeFolderMockModules.path}/error_100000`);
+  treeNodeMap[treeNodeFolderMockModulesError100000.key] = treeNodeFolderMockModulesError100000;
+
+  // mocker/mock_modules/error_100000/index.js
+  const treeNodeMockModulesError100000IndexJs = getTreeNodeMockModulesError100000IndexJs(network, treeNodeMap);
+  treeNodeMap[treeNodeMockModulesError100000IndexJs.key] = treeNodeMockModulesError100000IndexJs;
+
+  // mocker/mock_modules/error_100000/config.json
+  const treeNodeMockModulesError100000ConfigJson = getTreeNodeMockModulesError100000ConfigJson(network, treeNodeMap);
+  treeNodeMap[treeNodeMockModulesError100000ConfigJson.key] = treeNodeMockModulesError100000ConfigJson;
+
   const treeData = [{
     title: treeNodeFolderMocker.title,
     key: treeNodeFolderMocker.key,
@@ -122,6 +134,20 @@ function createFolderTree(network) {
             title: treeNodeMockModulesSuccessOtherConfigJson.title,
             key: treeNodeMockModulesSuccessOtherConfigJson.key,
             isLeaf: treeNodeMockModulesSuccessOtherConfigJson.isLeaf,
+          },
+        ],
+      }, {
+        title: treeNodeFolderMockModulesError100000.title,
+        key: treeNodeFolderMockModulesError100000.key,
+        children: [
+          {
+            title: treeNodeMockModulesError100000IndexJs.title,
+            key: treeNodeMockModulesError100000IndexJs.key,
+            isLeaf: treeNodeMockModulesError100000IndexJs.isLeaf,
+          }, {
+            title: treeNodeMockModulesError100000ConfigJson.title,
+            key: treeNodeMockModulesError100000ConfigJson.key,
+            isLeaf: treeNodeMockModulesError100000ConfigJson.isLeaf,
           },
         ],
       }],
@@ -224,14 +250,12 @@ function getTreeNodeMockModulesSuccessConfigJson(network, treeNodeMap) {
 
 // mocker/mock_modules/success_other/index.js
 function getTreeNodeMockModulesSuccessOtherIndexJs(network, treeNodeMap) {
-  const data = JSON.parse(network.response.body);
-
   return {
     title: 'index.js',
     key: 'mockModulesSuccessOtherIndexJs',
     isLeaf: true,
     path: `${treeNodeMap.mockModulesSuccessOther.path}/index.js`,
-    content: ejs.render(require('./tpl_modules/mock_modules/success_other/index.js.ejs.js'), { data }),
+    content: ejs.render(require('./tpl_modules/mock_modules/success_other/index.js.ejs.js'), {}),
   };
 }
 
@@ -247,6 +271,32 @@ function getTreeNodeMockModulesSuccessOtherConfigJson(network, treeNodeMap) {
     isLeaf: true,
     path: `${treeNodeMap.mockModulesSuccessOther.path}/config.json`,
     content: ejs.render(require('./tpl_modules/mock_modules/success_other/config.json.ejs.js'), { data }),
+  };
+}
+
+// mocker/mock_modules/error_100000/index.js
+function getTreeNodeMockModulesError100000IndexJs(network, treeNodeMap) {
+  return {
+    title: 'index.js',
+    key: 'mockModulesError100000IndexJs',
+    isLeaf: true,
+    path: `${treeNodeMap.mockModulesError100000.path}/index.js`,
+    content: ejs.render(require('./tpl_modules/mock_modules/error_100000/index.js.ejs.js'), {}),
+  };
+}
+
+// mocker/mock_modules/error_100000/config.json
+function getTreeNodeMockModulesError100000ConfigJson(network, treeNodeMap) {
+  const data = {
+    'description': `description_${treeNodeMap.mockModulesSuccessOther.title}`,
+  };
+
+  return {
+    title: 'config.json',
+    key: 'mockModulesError100000ConfigJson',
+    isLeaf: true,
+    path: `${treeNodeMap.mockModulesError100000.path}/config.json`,
+    content: ejs.render(require('./tpl_modules/mock_modules/error_100000/config.json.ejs.js'), { data }),
   };
 }
 
