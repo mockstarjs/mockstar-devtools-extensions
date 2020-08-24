@@ -32,15 +32,20 @@ function createFolderTree(network) {
 
   const treeMap = {};
 
+  // mocker
   const contentMocker = getContentMocker(network);
   treeMap[contentMocker.key] = contentMocker;
+
+  // base.js
+  const contentBaseJs = getContentBaseJs(network, treeMap);
+  treeMap[contentBaseJs.key] = contentBaseJs;
 
   const treeData = [
     {
       title: contentMocker.title,
       key: contentMocker.key,
       children: [
-        { title: 'base.js', key: 'baseJs', isLeaf: true },
+        { title: contentBaseJs.title, key: contentBaseJs.key, isLeaf: contentBaseJs.isLeaf },
         { title: 'config.json', key: 'configJson', isLeaf: true },
         { title: 'index.js', key: 'indexJs', isLeaf: true },
         {
@@ -83,7 +88,7 @@ function createFolderTree(network) {
     },
   ];
 
-  return treeData;
+  return { treeData, treeMap };
 }
 
 function getMockerName(url) {
@@ -106,12 +111,13 @@ function getContentBaseJs(network, treeMap) {
   return {
     title: 'base.js',
     key: 'baseJs',
-    path: `${treeMap['mocker']}/base.js`,
-    content: 1
+    path: `${treeMap.mocker.path}/base.js`,
+    content: ejs.render(require('./tpl_modules/base.js.ejs.js'), {}),
+    isLeaf: true,
   };
 }
 
-// export { createFolderTree };
-// console.log(createFolderTree(dataGet));
+export { createFolderTree };
+// console.log(JSON.stringify(createFolderTree(dataGet), null, 2));
 //
 // console.log(typeof require('./tpl_modules/base.js.ejs'))

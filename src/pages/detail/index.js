@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, Input, Tree, Row, Col } from 'antd';
+import { Button, Card, Col, Input, Row, Tree } from 'antd';
 
 import { createFolderTree } from './business';
 
@@ -11,7 +11,7 @@ class PageDetail extends Component {
     super(...props);
 
     this.state = {
-      selectedTreeKey: 'mockerName'
+      selectedTreeKey: 'mockerName',
     };
   }
 
@@ -23,7 +23,7 @@ class PageDetail extends Component {
     console.log('Trigger Select', keys, event);
 
     this.setState({
-      selectedTreeKey: keys[0]
+      selectedTreeKey: keys[0],
     });
   };
 
@@ -32,7 +32,8 @@ class PageDetail extends Component {
     const { list } = this.props;
     const { selectedTreeKey } = this.state;
 
-    const treeData = createFolderTree(list[id]);
+    const { treeData, treeMap } = createFolderTree(list[id]);
+    const treeNode = treeMap[selectedTreeKey];
 
     return (
       <div className="page-detail">
@@ -60,7 +61,7 @@ class PageDetail extends Component {
           <Col span={8}>
             <Card title={`${selectedTreeKey} 文件内容`} bordered={false}>
               <Input.TextArea
-                value={selectedTreeKey}
+                value={treeNode&&treeNode.content}
                 placeholder="Controlled autosize"
                 autoSize={{ minRows: 3 }}
               />
@@ -77,7 +78,7 @@ function mapStateToProps(state) {
   const { networkInfo } = state;
 
   return {
-    list: networkInfo.list
+    list: networkInfo.list,
   };
 }
 
