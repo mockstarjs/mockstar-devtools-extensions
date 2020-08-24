@@ -44,6 +44,10 @@ function createFolderTree(network) {
   const contentConfigJson = getContentConfigJson(network, treeMap);
   treeMap[contentConfigJson.key] = contentConfigJson;
 
+  // index.json
+  const contentIndexJs = getContentIndexJs(network, treeMap);
+  treeMap[contentIndexJs.key] = contentIndexJs;
+
   const treeData = [
     {
       title: contentMocker.title,
@@ -51,7 +55,7 @@ function createFolderTree(network) {
       children: [
         { title: contentBaseJs.title, key: contentBaseJs.key, isLeaf: contentBaseJs.isLeaf },
         { title: contentConfigJson.title, key: contentConfigJson.key, isLeaf: contentConfigJson.isLeaf },
-        { title: 'index.js', key: 'indexJs', isLeaf: true },
+        { title: contentIndexJs.title, key: contentIndexJs.key, isLeaf: contentIndexJs.isLeaf },
         {
           title: 'mock_modules',
           key: 'mockModules',
@@ -111,21 +115,19 @@ function getContentMocker(network, treeMap) {
   };
 }
 
-function getContentBaseJs(network, treeMap) {
+function getContentIndexJs(network, treeMap) {
   return {
-    title: 'base.js',
-    key: 'baseJs',
+    title: 'index.js',
+    key: 'indexJs',
     isLeaf: true,
-    path: `${treeMap.mocker.path}/base.js`,
-    content: ejs.render(require('./tpl_modules/base.js.ejs.js'), {}),
+    path: `${treeMap.mocker.path}/index.js`,
+    content: ejs.render(require('./tpl_modules/index.js.ejs.js'), {}),
   };
 }
 
 function getContentConfigJson(network, treeMap) {
   const url = network.request.url;
   const method = network.request.method;
-  const data = JSON.parse(network.response.body);
-
   const urlParseResult = urlParse(url);
 
   return {
@@ -146,6 +148,16 @@ function getContentConfigJson(network, treeMap) {
         ],
       },
     }),
+  };
+}
+
+function getContentBaseJs(network, treeMap) {
+  return {
+    title: 'base.js',
+    key: 'baseJs',
+    isLeaf: true,
+    path: `${treeMap.mocker.path}/base.js`,
+    content: ejs.render(require('./tpl_modules/base.js.ejs.js'), {}),
   };
 }
 

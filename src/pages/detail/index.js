@@ -59,9 +59,9 @@ class PageDetail extends Component {
           </Col>
 
           <Col span={8}>
-            <Card title={`${selectedTreeKey} 文件内容`} bordered={false}>
+            <Card title={`${treeNode && treeNode.path}`} bordered={false}>
               <Input.TextArea
-                value={treeNode&&treeNode.content}
+                value={treeNode && treeNode.content}
                 placeholder="Controlled autosize"
                 autoSize={{ minRows: 3 }}
               />
