@@ -30,73 +30,95 @@ function createFolderTree(network) {
   const method = network.request.method;
   const data = JSON.parse(network.response.body);
 
-  const treeMap = {};
+  const mockerName = getMockerName(network.request.url);
+
+  const treeNodeMap = {};
 
   // mocker
-  const contentMocker = getContentMocker(network);
-  treeMap[contentMocker.key] = contentMocker;
+  const treeNodeFolderMocker = getTreeNodeFolder('mocker', mockerName, mockerName);
+  treeNodeMap[treeNodeFolderMocker.key] = treeNodeFolderMocker;
 
   // base.js
-  const contentBaseJs = getContentBaseJs(network, treeMap);
-  treeMap[contentBaseJs.key] = contentBaseJs;
+  const treeNodeBaseJs = getTreeNodeBaseJs(network, treeNodeMap);
+  treeNodeMap[treeNodeBaseJs.key] = treeNodeBaseJs;
 
   // config.json
-  const contentConfigJson = getContentConfigJson(network, treeMap);
-  treeMap[contentConfigJson.key] = contentConfigJson;
+  const treeNodeConfigJson = getTreeNodeConfigJson(network, treeNodeMap);
+  treeNodeMap[treeNodeConfigJson.key] = treeNodeConfigJson;
 
-  // index.json
-  const contentIndexJs = getContentIndexJs(network, treeMap);
-  treeMap[contentIndexJs.key] = contentIndexJs;
+  // index.js
+  const treeNodeIndexJs = getTreeNodeIndexJs(network, treeNodeMap);
+  treeNodeMap[treeNodeIndexJs.key] = treeNodeIndexJs;
+
+  // mocker/mock_modules
+  const treeNodeFolderMockModules = getTreeNodeFolder('mockModules', 'mock_modules', `${treeNodeFolderMocker.path}/mock_modules`);
+  treeNodeMap[treeNodeFolderMockModules.key] = treeNodeFolderMockModules;
+
+  // mocker/mock_modules/success
+  const treeNodeFolderMockModulesSuccess = getTreeNodeFolder('mockModulesSuccess', 'success', `${treeNodeFolderMockModules.path}/success`);
+  treeNodeMap[treeNodeFolderMockModulesSuccess.key] = treeNodeFolderMockModulesSuccess;
+
+  // mocker/mock_modules/success/index.js
+  const treeNodeMockModulesSuccessIndexJs = getTreeNodeMockModulesSuccessIndexJs(network, treeNodeMap);
+  treeNodeMap[treeNodeMockModulesSuccessIndexJs.key] = treeNodeMockModulesSuccessIndexJs;
 
   const treeData = [
     {
-      title: contentMocker.title,
-      key: contentMocker.key,
-      children: [
-        { title: contentBaseJs.title, key: contentBaseJs.key, isLeaf: contentBaseJs.isLeaf },
-        { title: contentConfigJson.title, key: contentConfigJson.key, isLeaf: contentConfigJson.isLeaf },
-        { title: contentIndexJs.title, key: contentIndexJs.key, isLeaf: contentIndexJs.isLeaf },
-        {
-          title: 'mock_modules',
-          key: 'mockModules',
-          children: [
-            {
-              title: 'success',
-              key: 'mockModulesSuccess',
-              children: [
-                {
-                  title: 'index.js',
-                  key: 'mockModulesSuccessIndexJs',
-                  isLeaf: true,
-                }, {
-                  title: 'config.json',
-                  key: 'mockModulesSuccessConfigJson',
-                  isLeaf: true,
-                },
-              ],
-            },
-            {
-              title: 'some-other',
-              key: 'mockModulesSomeOther',
-              children: [
-                {
-                  title: 'index.js',
-                  key: 'mockModulesSomeOtherIndexJs',
-                  isLeaf: true,
-                }, {
-                  title: 'config.json',
-                  key: 'mockModulesSomeOtherConfigJson',
-                  isLeaf: true,
-                },
-              ],
-            },
-          ],
-        },
+      title: treeNodeFolderMocker.title,
+      key: treeNodeFolderMocker.key,
+      children: [{
+        title: treeNodeBaseJs.title,
+        key: treeNodeBaseJs.key,
+        isLeaf: treeNodeBaseJs.isLeaf,
+      }, {
+        title: treeNodeConfigJson.title,
+        key: treeNodeConfigJson.key,
+        isLeaf: treeNodeConfigJson.isLeaf,
+      }, {
+        title: treeNodeIndexJs.title,
+        key: treeNodeIndexJs.key,
+        isLeaf: treeNodeIndexJs.isLeaf,
+      }, {
+        title: treeNodeFolderMockModules.title,
+        key: treeNodeFolderMockModules.key,
+        children: [
+          {
+            title: treeNodeFolderMockModulesSuccess.title,
+            key: treeNodeFolderMockModulesSuccess.key,
+            children: [
+              {
+                title: 'index.js',
+                key: 'mockModulesSuccessIndexJs',
+                isLeaf: true,
+              }, {
+                title: 'config.json',
+                key: 'mockModulesSuccessConfigJson',
+                isLeaf: true,
+              },
+            ],
+          },
+          {
+            title: 'some-other',
+            key: 'mockModulesSomeOther',
+            children: [
+              {
+                title: 'index.js',
+                key: 'mockModulesSomeOtherIndexJs',
+                isLeaf: true,
+              }, {
+                title: 'config.json',
+                key: 'mockModulesSomeOtherConfigJson',
+                isLeaf: true,
+              },
+            ],
+          },
+        ],
+      },
       ],
     },
   ];
 
-  return { treeData, treeMap };
+  return { treeData, treeNodeMap };
 }
 
 function getMockerName(url) {
@@ -105,59 +127,73 @@ function getMockerName(url) {
   return pathnameArr[pathnameArr.length - 1];
 }
 
-function getContentMocker(network, treeMap) {
-  const mockerName = getMockerName(network.request.url);
-
+function getTreeNodeFolder(key, title, path) {
   return {
-    title: mockerName,
-    key: 'mocker',
-    path: mockerName,
+    key,
+    title,
+    path,
   };
 }
 
-function getContentIndexJs(network, treeMap) {
+// base.js
+function getTreeNodeBaseJs(network, treeNodeMap) {
   return {
-    title: 'index.js',
-    key: 'indexJs',
+    title: 'base.js',
+    key: 'baseJs',
     isLeaf: true,
-    path: `${treeMap.mocker.path}/index.js`,
-    content: ejs.render(require('./tpl_modules/index.js.ejs.js'), {}),
+    path: `${treeNodeMap.mocker.path}/base.js`,
+    content: ejs.render(require('./tpl_modules/base.js.ejs.js'), {}),
   };
 }
 
-function getContentConfigJson(network, treeMap) {
+// config.json
+function getTreeNodeConfigJson(network, treeNodeMap) {
   const url = network.request.url;
   const method = network.request.method;
   const urlParseResult = urlParse(url);
+
+  const data = {
+    'description': `description for ${treeNodeMap.mocker.title}`,
+    'route': urlParseResult.pathname,
+    'defaultModule': 'success',
+    'method': method,
+    'tags': [
+      'tag1',
+      'tag2',
+      method,
+    ],
+  };
 
   return {
     title: 'config.json',
     key: 'configJson',
     isLeaf: true,
-    path: `${treeMap.mocker.path}/config.json`,
-    content: ejs.render(require('./tpl_modules/config.json.ejs.js'), {
-      data: {
-        'description': `description for ${treeMap.mocker.title}`,
-        'route': urlParseResult.pathname,
-        'defaultModule': 'success',
-        'method': method,
-        'tags': [
-          'tag1',
-          'tag2',
-          method,
-        ],
-      },
-    }),
+    path: `${treeNodeMap.mocker.path}/config.json`,
+    content: ejs.render(require('./tpl_modules/config.json.ejs.js'), { data }),
   };
 }
 
-function getContentBaseJs(network, treeMap) {
+// index.js
+function getTreeNodeIndexJs(network, treeNodeMap) {
   return {
-    title: 'base.js',
-    key: 'baseJs',
+    title: 'index.js',
+    key: 'indexJs',
     isLeaf: true,
-    path: `${treeMap.mocker.path}/base.js`,
-    content: ejs.render(require('./tpl_modules/base.js.ejs.js'), {}),
+    path: `${treeNodeMap.mocker.path}/index.js`,
+    content: ejs.render(require('./tpl_modules/index.js.ejs.js'), {}),
+  };
+}
+
+// mocker/mock_modules/success/index.js
+function getTreeNodeMockModulesSuccessIndexJs(network, treeNodeMap) {
+  const data = JSON.parse(network.response.body);
+
+  return {
+    title: 'index.js',
+    key: 'mockModulesSuccessIndexJs',
+    isLeaf: true,
+    path: `${treeNodeMap.mockModulesSuccess.path}/index.js`,
+    content: ejs.render(require('./tpl_modules/mock_modules/success/index.js.ejs.js'), { data }),
   };
 }
 

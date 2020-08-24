@@ -32,8 +32,8 @@ class PageDetail extends Component {
     const { list } = this.props;
     const { selectedTreeKey } = this.state;
 
-    const { treeData, treeMap } = createFolderTree(list[id]);
-    const treeNode = treeMap[selectedTreeKey];
+    const { treeData, treeNodeMap } = createFolderTree(list[id]);
+    const treeNode = treeNodeMap[selectedTreeKey];
 
     return (
       <div className="page-detail">
