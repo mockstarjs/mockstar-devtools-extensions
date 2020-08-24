@@ -1,6 +1,4 @@
 module.exports = `
-{
-  "description": "description_success"
-}
+<%- JSON.stringify(data, null, 2); %>
 
 `;

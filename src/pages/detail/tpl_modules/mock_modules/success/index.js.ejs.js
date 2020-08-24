@@ -7,7 +7,7 @@ module.exports = `
 * @return {Promise|*}
 */
 module.exports = function (params, req) {
-  return <%- JSON.stringify(data, null, 2) %>;
+  return <%- JSON.stringify(data, null, 2); %>;
 };
 
 `;

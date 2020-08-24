@@ -62,6 +62,10 @@ function createFolderTree(network) {
   const treeNodeMockModulesSuccessIndexJs = getTreeNodeMockModulesSuccessIndexJs(network, treeNodeMap);
   treeNodeMap[treeNodeMockModulesSuccessIndexJs.key] = treeNodeMockModulesSuccessIndexJs;
 
+  // mocker/mock_modules/success/config.json
+  const treeNodeMockModulesSuccessConfigJson = getTreeNodeMockModulesSuccessConfigJson(network, treeNodeMap);
+  treeNodeMap[treeNodeMockModulesSuccessConfigJson.key] = treeNodeMockModulesSuccessConfigJson;
+
   const treeData = [
     {
       title: treeNodeFolderMocker.title,
@@ -87,13 +91,13 @@ function createFolderTree(network) {
             key: treeNodeFolderMockModulesSuccess.key,
             children: [
               {
-                title: 'index.js',
-                key: 'mockModulesSuccessIndexJs',
-                isLeaf: true,
+                title: treeNodeMockModulesSuccessIndexJs.title,
+                key: treeNodeMockModulesSuccessIndexJs.key,
+                isLeaf: treeNodeMockModulesSuccessIndexJs.isLeaf,
               }, {
-                title: 'config.json',
-                key: 'mockModulesSuccessConfigJson',
-                isLeaf: true,
+                title: treeNodeMockModulesSuccessConfigJson.title,
+                key: treeNodeMockModulesSuccessConfigJson.key,
+                isLeaf: treeNodeMockModulesSuccessConfigJson.isLeaf,
               },
             ],
           },
@@ -194,6 +198,21 @@ function getTreeNodeMockModulesSuccessIndexJs(network, treeNodeMap) {
     isLeaf: true,
     path: `${treeNodeMap.mockModulesSuccess.path}/index.js`,
     content: ejs.render(require('./tpl_modules/mock_modules/success/index.js.ejs.js'), { data }),
+  };
+}
+
+// mocker/mock_modules/success/config.json
+function getTreeNodeMockModulesSuccessConfigJson(network, treeNodeMap) {
+  const data = {
+    'description': `description_${treeNodeMap.mockModulesSuccess.title}`,
+  };
+
+  return {
+    title: 'config.json',
+    key: 'mockModulesSuccessConfigJson',
+    isLeaf: true,
+    path: `${treeNodeMap.mockModulesSuccess.path}/config.json`,
+    content: ejs.render(require('./tpl_modules/mock_modules/success/config.json.ejs.js'), { data }),
   };
 }
 
