@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, Col, Input, Row, Tree } from 'antd';
+import { Button, Card, Col, Input, Row, Tabs, Tree } from 'antd';
 
 import { createFolderTree } from './business';
 
@@ -39,36 +39,37 @@ class PageDetail extends Component {
       <div className="page-detail">
         <Button onClick={this.gotoHome}>返回</Button>
 
-        <Row>
-          <Col span={8}>
+        <Tabs defaultActiveKey="2">
+          <Tabs.TabPane tab="请求详情" key="1">
             <Card title={`请求列表序号：${parseInt(id) + 1} 的详细信息`} bordered={false}>
               <Input.TextArea
                 value={JSON.stringify(list[id], null, 2)}
-                placeholder="Controlled autosize"
                 autoSize={{ minRows: 3 }}
               />
             </Card>
-          </Col>
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="mockstar" key="2">
+            <Row>
+              <Col span={8}>
+                <Tree.DirectoryTree
+                  defaultExpandAll
+                  onSelect={this.handleSelectTree}
+                  treeData={treeData}
+                />
+              </Col>
 
-          <Col span={8}>
-            <Tree.DirectoryTree
-              defaultExpandAll
-              onSelect={this.handleSelectTree}
-              treeData={treeData}
-            />
-          </Col>
-
-          <Col span={8}>
-            <Card title={`${treeNode && treeNode.path}`} bordered={false}>
-              <Input.TextArea
-                value={treeNode && treeNode.content}
-                placeholder="Controlled autosize"
-                autoSize={{ minRows: 3 }}
-              />
-            </Card>
-          </Col>
-        </Row>
-
+              <Col span={16}>
+                <Card title={`${treeNode && treeNode.path || ''}`} bordered={false}>
+                  <Input.TextArea
+                    value={treeNode && treeNode.content}
+                    placeholder="点击左侧目录树查看文件内容"
+                    autoSize={{ minRows: 3 }}
+                  />
+                </Card>
+              </Col>
+            </Row>
+          </Tabs.TabPane>
+        </Tabs>
       </div>
     );
   }
