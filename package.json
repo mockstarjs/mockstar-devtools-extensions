@@ -27,6 +27,7 @@
     "axios": "^0.18.1",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.15",
+    "ejs": "^3.1.5",
     "github-markdown-css": "^3.0.1",
     "js-cookie": "^2.2.1",
     "less": "^2.7.3",
@@ -43,7 +44,8 @@
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "url-parse": "^1.4.7"
+    "url-parse": "^1.4.7",
+    "walk-sync": "^2.2.0"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.12.2",

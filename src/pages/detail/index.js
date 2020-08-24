@@ -11,7 +11,7 @@ class PageDetail extends Component {
     super(...props);
 
     this.state = {
-      selectedTreeKey: '0-0'
+      selectedTreeKey: 'mockerName'
     };
   }
 
