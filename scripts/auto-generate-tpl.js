@@ -20,7 +20,7 @@ paths.forEach((entry) => {
   } else {
     // 如果是文件，则追加一个 .js 后缀，且修改为 js 模块
     const content = fse.readFileSync(curPath, 'utf8');
-    const moduleContent = 'module.exports=`\n' + content + '\n`;';
+    const moduleContent = 'module.exports = `\n' + content + '\n`;';
 
     fse.outputFileSync(`${outputPath}.js`, moduleContent);
   }

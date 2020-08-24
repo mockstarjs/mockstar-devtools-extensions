@@ -1,4 +1,4 @@
-module.exports=`
+module.exports = `
 const { getErrorData } = require('../../base');
 
 module.exports = function () {

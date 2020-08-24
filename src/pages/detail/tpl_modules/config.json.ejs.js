@@ -1,13 +1,4 @@
-module.exports=`
-{
-  "description": "description for demo_cgi",
-  "route": "/cgi-bin/a/b/demo_cgi",
-  "defaultModule": "success_type_1",
-  "method": "",
-  "tags": [
-    "tag1",
-    "tag2"
-  ]
-}
+module.exports = `
+<%- JSON.stringify(data,null,2) %>
 
 `;

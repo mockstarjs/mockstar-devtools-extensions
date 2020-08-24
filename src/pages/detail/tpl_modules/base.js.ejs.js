@@ -1,4 +1,4 @@
-module.exports=`
+module.exports = `
 /**
  * 默认值
  * @type {Object}
