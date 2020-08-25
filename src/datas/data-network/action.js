@@ -15,7 +15,7 @@ export function updateNetworkRspData(id, data) {
     jsonData = JSON.parse(data);
   } catch (e) {
     jsonData = {};
-    console.error('updateNetworkRspData JSON.parse catch err', data);
+    console.log('updateNetworkRspData JSON.parse catch err', data);
   }
 
   return {

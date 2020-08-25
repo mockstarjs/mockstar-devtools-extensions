@@ -5,7 +5,7 @@ import Detail from './pages/detail';
 import Home from './pages/home';
 
 import { addInNetworkList, updateNetworkRspData } from './datas/data-network';
-import { dataGet, dataPost } from './datas/data-network/mock';
+import { dataGet, dataMockStar, dataPost } from './datas/data-network/mock';
 
 import './App.less';
 
@@ -24,6 +24,7 @@ export default class App extends Component {
       this.isMocked = true;
       this.props.dispatch(addInNetworkList(dataGet));
       this.props.dispatch(addInNetworkList(dataPost));
+      this.props.dispatch(addInNetworkList(dataMockStar));
     }
   }
 

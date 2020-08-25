@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, Col, Input, Row, Tabs, Tree,Tag } from 'antd';
+import { Button, Card, Col, Descriptions, Input, PageHeader, Row, Tabs, Tag, Tree } from 'antd';
 
 import { createFolderTree, downloadSampleCode } from './business';
 
@@ -55,11 +55,28 @@ class PageDetail extends Component {
 
     const { treeData, treeNodeMap } = createFolderTree(currentNetwork);
     const treeNode = treeNodeMap[selectedTreeKey];
+    debugger
 
     return (
       <div className="page-detail">
-        <Button onClick={this.gotoHome} type="primary">返回</Button>
-        <Tag>{currentNetwork.request.url}</Tag>
+        <PageHeader
+          className="site-page-header"
+          onBack={this.gotoHome}
+          title="返回"
+          subTitle=""
+        >
+          <Descriptions size="small" column={1}>
+            <Descriptions.Item label="请求地址">{currentNetwork.request.url}</Descriptions.Item>
+            {
+              currentNetwork.mockstar ? (
+                <Descriptions.Item label="mockstar">
+                  <Tag color="#f50">{currentNetwork.mockstar.mocker}</Tag>
+                  <Tag color="#f50">{currentNetwork.mockstar.mockModule}</Tag>
+                </Descriptions.Item>
+              ) : null
+            }
+          </Descriptions>
+        </PageHeader>
 
         <Tabs defaultActiveKey="2">
           <Tabs.TabPane tab={`请求详情(id=${id})`} key="1">
@@ -70,7 +87,7 @@ class PageDetail extends Component {
               />
             </Card>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="mockstar" key="2">
+          <Tabs.TabPane tab="mockstar样例代码" key="2">
             <Row>
               <Col span={8}>
                 <Tree.DirectoryTree

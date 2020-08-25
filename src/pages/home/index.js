@@ -24,6 +24,16 @@ class PageHome extends Component {
             }}>
               <div>
                 <Tag color="red">{item.id}</Tag>
+
+                {
+                  item.mockstar ? (
+                    <>
+                      <Tag color="#f50">{item.mockstar.mocker}</Tag>
+                      <Tag color="#f50">{item.mockstar.mockModule}</Tag>
+                    </>
+                  ) : null
+                }
+
                 <Tag color={item.request.method === 'GET' ? '#2db7f5' : '#87d068'}>{item.request.method}</Tag>
                 <span>{item.request.url}</span>
               </div>

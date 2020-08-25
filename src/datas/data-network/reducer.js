@@ -20,6 +20,18 @@ export default function networkInfo(state = initialState, action) {
         data.response.jsonData = Object.assign({}, data.response.jsonData);
       }
 
+      // 当前是否已经是 mocker 数据
+      const responseHeaders = data.response.headers;
+      const mockstarMockerItem = responseHeaders && responseHeaders.filter(item => item.name === 'x-mockstar-mocker')[0];
+      const mockstarMockModuleItem = responseHeaders && responseHeaders.filter(item => item.name === 'x-mockstar-mock-module')[0];
+
+      if (mockstarMockerItem && mockstarMockModuleItem) {
+        data.mockstar = {
+          mocker: mockstarMockerItem.value,
+          mockModule: mockstarMockModuleItem.value,
+        };
+      }
+
       update = {
         list: [...state.list, data],
       };
