@@ -26,10 +26,6 @@ const dataPost = {
 };
 
 function createFolderTree(network) {
-  const url = network.request.url;
-  const method = network.request.method;
-  const data = JSON.parse(network.response.body);
-
   const mockerName = getMockerName(network.request.url);
 
   const treeNodeMap = {};
@@ -222,14 +218,12 @@ function getTreeNodeIndexJs(network, treeNodeMap) {
 
 // mocker/mock_modules/debug/index.js
 function getTreeNodeMockModulesDebugIndexJs(network, treeNodeMap) {
-  const data = JSON.parse(network.response.body);
-
   return {
     title: 'index.js',
     key: 'mockModulesDebugIndexJs',
     isLeaf: true,
     path: `${treeNodeMap.mockModulesDebug.path}/index.js`,
-    content: ejs.render(require('./tpl_modules/mock_modules/debug/index.js.ejs.js'), { data }),
+    content: ejs.render(require('./tpl_modules/mock_modules/debug/index.js.ejs.js'), { data: network.response.jsonData }),
   };
 }
 

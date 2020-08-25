@@ -24,6 +24,7 @@ class PageHome extends Component {
             }}>
               <div>
                 <Tag>{index + 1}</Tag>
+                <Tag color="red">{item.id}</Tag>
                 <Tag color={item.request.method === 'GET' ? '#2db7f5' : '#87d068'}>{item.request.method}</Tag>
                 <span>{item.request.url}</span>
               </div>

@@ -1,5 +1,5 @@
 import reducer from './reducer';
 
-export { addInNetworkList } from './action';
+export { addInNetworkList, updateNetworkRspData } from './action';
 
 export const networkInfo = reducer;
