@@ -1,5 +1,5 @@
 chrome.devtools.panels.create(
-  'mockstar',
+  'MockStar',
   'icons/icon16.png',
   'mockstar/index.html'
 );

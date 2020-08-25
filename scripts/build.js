@@ -25,4 +25,11 @@ const outputPath = path.join(projectRootPath, 'release', `v${pkgInfo.version}`);
     path.join(projectRootPath, 'build'),
     path.join(outputPath, 'mockstar'),
   );
+
+  // 更新 manifest.json 中的版本
+  const manifestJsonOriginalFilePath = path.join(projectRootPath, 'public_devtools/manifest.json');
+  const manifestJsonFilePath = path.join(outputPath, 'manifest.json');
+  const manifestJson = fse.readJsonSync(manifestJsonOriginalFilePath);
+  manifestJson.version = pkgInfo.version;
+  fse.writeJsonSync(manifestJsonFilePath, manifestJson);
 })();
