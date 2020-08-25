@@ -9,16 +9,26 @@ import { dataGet, dataPost } from './datas/data-network/mock';
 
 import './App.less';
 
+const IN_CHROME_DEVTOOLS = window.chrome && window.chrome.devtools;
+
 export default class App extends Component {
   constructor(...props) {
     super(...props);
 
     // 自定义 id
     this.id = this.props.networkInfo.list.length;
+
+    // debug 调试
+    if (!this.isMocked && !IN_CHROME_DEVTOOLS) {
+      console.log('not in chrome devtools!');
+      this.isMocked = true;
+      this.props.dispatch(addInNetworkList(dataGet));
+      this.props.dispatch(addInNetworkList(dataPost));
+    }
   }
 
   componentDidMount() {
-    if (window.chrome && window.chrome.devtools) {
+    if (IN_CHROME_DEVTOOLS) {
       // https://developer.chrome.com/extensions/devtools_network#event-onRequestFinished
       window.chrome.devtools.network.onRequestFinished.addListener((request) => {
         console.log('==onRequestFinished==', request._resourceType, request);
@@ -48,10 +58,8 @@ export default class App extends Component {
         }
       });
     } else {
-      console.log('not in chrome devtools!');
-
-      this.props.dispatch(addInNetworkList(dataGet));
-      this.props.dispatch(addInNetworkList(dataPost));
+      // componentDidMount will not be called again if you are already at a classes/:id route.
+      // https://stackoverflow.com/questions/34468052/react-router-componentdidmount-not-called-when-navigating-to-url
     }
   }
 

@@ -18,12 +18,11 @@ class PageHome extends Component {
           footer={<div>总共{list.length}条数据</div>}
           bordered
           dataSource={list}
-          renderItem={(item, index) => (
-            <List.Item key={index} onClick={() => {
-              this.gotoDetail(index);
+          renderItem={(item) => (
+            <List.Item key={item.id} onClick={() => {
+              this.gotoDetail(item.id);
             }}>
               <div>
-                <Tag>{index + 1}</Tag>
                 <Tag color="red">{item.id}</Tag>
                 <Tag color={item.request.method === 'GET' ? '#2db7f5' : '#87d068'}>{item.request.method}</Tag>
                 <span>{item.request.url}</span>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, Col, Input, Row, Tabs, Tree } from 'antd';
+import { Button, Card, Col, Input, Row, Tabs, Tree,Tag } from 'antd';
 
 import { createFolderTree, downloadSampleCode } from './business';
 
@@ -41,23 +41,31 @@ class PageDetail extends Component {
     downloadSampleCode(treeNode.content, treeNode.title);
   };
 
+  getCurrentNetwork = () => {
+    const id = parseInt(this.props.match.params.id);
+    const { list } = this.props;
+
+    return list.filter(item => item.id === id)[0];
+  };
+
   render() {
     const id = this.props.match.params.id;
-    const { list } = this.props;
     const { selectedTreeKey } = this.state;
+    const currentNetwork = this.getCurrentNetwork();
 
-    const { treeData, treeNodeMap } = createFolderTree(list[id]);
+    const { treeData, treeNodeMap } = createFolderTree(currentNetwork);
     const treeNode = treeNodeMap[selectedTreeKey];
 
     return (
       <div className="page-detail">
-        <Button onClick={this.gotoHome}>返回</Button>
+        <Button onClick={this.gotoHome} type="primary">返回</Button>
+        <Tag>{currentNetwork.request.url}</Tag>
 
         <Tabs defaultActiveKey="2">
-          <Tabs.TabPane tab="请求详情" key="1">
-            <Card title={`请求列表序号：${parseInt(id) + 1} 的详细信息`} bordered={false}>
+          <Tabs.TabPane tab={`请求详情(id=${id})`} key="1">
+            <Card title={currentNetwork.request.url} bordered={false}>
               <Input.TextArea
-                value={JSON.stringify(list[id], null, 2)}
+                value={JSON.stringify(currentNetwork, null, 2)}
                 autoSize={{ minRows: 3 }}
               />
             </Card>
@@ -74,7 +82,7 @@ class PageDetail extends Component {
               </Col>
 
               <Col span={16}>
-                <Card title={`${treeNode && treeNode.path || '请选择'}`}
+                <Card title={`${(treeNode && treeNode.path) || '请选择'}`}
                       extra={<Button type="primary" onClick={() => {
                         this.handleDownload(treeNode);
                       }}>下载</Button>}
