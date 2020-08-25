@@ -11,7 +11,7 @@ class PageDetail extends Component {
     super(...props);
 
     this.state = {
-      selectedTreeKey: 'mockerName',
+      selectedTreeKey: 'mockModulesDebugIndexJs',
     };
   }
 
@@ -67,6 +67,7 @@ class PageDetail extends Component {
               <Col span={8}>
                 <Tree.DirectoryTree
                   defaultExpandAll
+                  defaultSelectedKeys={[selectedTreeKey]}
                   onSelect={this.handleSelectTree}
                   treeData={treeData}
                 />

@@ -89,6 +89,7 @@ function createFolderTree(network) {
   const treeData = [{
     title: treeNodeFolderMocker.title,
     key: treeNodeFolderMocker.key,
+    selectable: false,
     children: [{
       title: treeNodeBaseJs.title,
       key: treeNodeBaseJs.key,
@@ -104,9 +105,11 @@ function createFolderTree(network) {
     }, {
       title: treeNodeFolderMockModules.title,
       key: treeNodeFolderMockModules.key,
+      selectable: false,
       children: [{
         title: treeNodeFolderMockModulesDebug.title,
         key: treeNodeFolderMockModulesDebug.key,
+        selectable: false,
         children: [
           {
             title: treeNodeMockModulesDebugIndexJs.title,
@@ -121,6 +124,7 @@ function createFolderTree(network) {
       }, {
         title: treeNodeFolderMockModulesError100000.title,
         key: treeNodeFolderMockModulesError100000.key,
+        selectable: false,
         children: [
           {
             title: treeNodeMockModulesError100000IndexJs.title,
@@ -135,6 +139,7 @@ function createFolderTree(network) {
       }, {
         title: treeNodeFolderMockModulesSuccessOther.title,
         key: treeNodeFolderMockModulesSuccessOther.key,
+        selectable: false,
         children: [
           {
             title: treeNodeMockModulesSuccessOtherIndexJs.title,

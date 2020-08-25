@@ -49,6 +49,7 @@ export default class App extends Component {
       });
     } else {
       console.log('not in chrome devtools!');
+
       this.props.dispatch(addInNetworkList(dataGet));
       this.props.dispatch(addInNetworkList(dataPost));
     }
