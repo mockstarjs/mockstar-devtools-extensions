@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'antd';
+import { Button, Card } from 'antd';
 
 import './index.less';
 
@@ -11,7 +11,9 @@ export default function MockStarCms(props) {
   return (
     <div className="mockstar-cms" style={{ height: 'calc(100vh - 200px)' }}>
       <Card>
-        <p>完整功能请在浏览器打开: <a href={mockstarUrl} target="_blank" rel="noopener noreferrer">{mockstarUrl}</a></p>
+        <p>完整功能请在浏览器打开: <Button type="link" onClick={() => {
+          window.open(mockstarUrl);
+        }}>{mockstarUrl}</Button></p>
       </Card>,
       <iframe
         title={'mockstar cms'}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { List, Tag } from 'antd';
+
 import './index.less';
 
 class PageHome extends Component {
@@ -14,8 +15,8 @@ class PageHome extends Component {
     return (
       <div className="page-home">
         <List
-          header={<div>所有的 xhr 请求</div>}
           footer={<div>总共{list.length}条数据</div>}
+          className="network-list"
           bordered
           dataSource={list}
           renderItem={(item) => (

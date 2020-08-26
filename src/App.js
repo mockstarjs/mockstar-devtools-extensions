@@ -4,10 +4,13 @@ import _ from 'lodash';
 import Detail from './pages/detail';
 import Home from './pages/home';
 
+import Header from './components/display-header';
+
 import { addInNetworkList, updateNetworkRspData } from './datas/data-network';
 import { dataGet, dataMockStar, dataPost } from './datas/data-network/mock';
 
 import './App.less';
+import { Layout } from 'antd';
 
 const IN_CHROME_DEVTOOLS = window.chrome && window.chrome.devtools;
 
@@ -66,12 +69,24 @@ export default class App extends Component {
 
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route exact path={`/`} component={Home} />
-          <Route exact path={`/detail/:id`} component={Detail} />
-        </Switch>
-      </Router>
+      <Layout>
+        <Header />
+
+        <Layout.Content
+          style={{
+            marginTop: 64,
+            display: 'flex',
+            height: 'calc(100vh - 80px)',
+          }}
+        >
+          <Router>
+            <Switch>
+              <Route exact path={`/`} component={Home} />
+              <Route exact path={`/detail/:id`} component={Detail} />
+            </Switch>
+          </Router>
+        </Layout.Content>
+      </Layout>
     );
   }
 }
