@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { Layout } from 'antd';
 import _ from 'lodash';
+
 import Detail from './pages/detail';
 import Home from './pages/home';
 
 import Header from './components/display-header';
+import Footer from './components/display-footer';
 
 import { addInNetworkList, updateNetworkRspData } from './datas/data-network';
 import { dataGet, dataMockStar, dataPost } from './datas/data-network/mock';
 
+import pkgInfo from '../package.json';
+
 import './App.less';
-import { Layout } from 'antd';
 
 const IN_CHROME_DEVTOOLS = window.chrome && window.chrome.devtools;
 
@@ -32,6 +36,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    console.log('==pkgInfo==', pkgInfo);
     if (IN_CHROME_DEVTOOLS) {
       // https://developer.chrome.com/extensions/devtools_network#event-onRequestFinished
       window.chrome.devtools.network.onRequestFinished.addListener((request) => {
@@ -76,7 +81,7 @@ export default class App extends Component {
           style={{
             marginTop: 64,
             display: 'flex',
-            height: 'calc(100vh - 80px)',
+            height: 'calc(100vh - 110px)',
           }}
         >
           <Router>
@@ -86,6 +91,8 @@ export default class App extends Component {
             </Switch>
           </Router>
         </Layout.Content>
+
+        <Footer pkgInfo={pkgInfo} />
       </Layout>
     );
   }

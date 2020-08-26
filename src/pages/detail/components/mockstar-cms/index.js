@@ -9,7 +9,7 @@ export default function MockStarCms(props) {
   const mockstarUrl = `http://127.0.0.1:9527/mockstar-admin/mockers/${mockerName}`;
 
   return (
-    <div className="mockstar-cms" style={{ height: 'calc(100vh - 200px)' }}>
+    <div className="mockstar-cms" style={{ height: 'calc(100vh - 350px)' }}>
       <Card>
         <p>完整功能请在浏览器打开: <Button type="link" onClick={() => {
           window.open(mockstarUrl);
