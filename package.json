@@ -1,15 +1,15 @@
 {
-  "name": "mockstar-devtools",
+  "name": "mockstar-devtools-extensions",
   "version": "1.0.1",
   "private": true,
   "scripts": {
     "start": "react-app-rewired start",
     "build": "cross-env INLINE_RUNTIME_CHUNK=false react-app-rewired build",
-    "release": "node scripts/build.js"
+    "build:chrome": "node scripts/build-chrome.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mockstarjs/mockstar-devtools.git"
+    "url": "git+https://github.com/mockstarjs/mockstar-devtools-extensions.git"
   },
   "keywords": [
     "devtools",
@@ -18,7 +18,7 @@
   "author": "helinjiang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mockstarjs/mockstar-devtools/issues"
+    "url": "https://github.com/mockstarjs/mockstar-devtools-extensions/issues"
   },
   "homepage": "/mockstar",
   "dependencies": {

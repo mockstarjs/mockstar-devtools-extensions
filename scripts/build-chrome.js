@@ -4,6 +4,7 @@ const fse = require('fs-extra');
 const pkgInfo = require('../package.json');
 
 const projectRootPath = path.join(__dirname, '../');
+const chromePublicRootPath = path.join(projectRootPath, 'chrome');
 const outputPath = path.join(projectRootPath, 'release', `v${pkgInfo.version}`);
 
 (function () {
@@ -14,7 +15,7 @@ const outputPath = path.join(projectRootPath, 'release', `v${pkgInfo.version}`);
   shelljs.rm('-rf', outputPath);
 
   // 复制 devtools 的一些公共文件
-  shelljs.cp('-r', path.join(projectRootPath, 'public_devtools'), outputPath);
+  shelljs.cp('-r', chromePublicRootPath, outputPath);
 
   // 执行构建
   shelljs.exec('npm run build', { cwd: projectRootPath });
@@ -27,7 +28,7 @@ const outputPath = path.join(projectRootPath, 'release', `v${pkgInfo.version}`);
   );
 
   // 更新 manifest.json 中的版本
-  const manifestJsonOriginalFilePath = path.join(projectRootPath, 'public_devtools/manifest.json');
+  const manifestJsonOriginalFilePath = path.join(chromePublicRootPath, 'manifest.json');
   const manifestJsonFilePath = path.join(outputPath, 'manifest.json');
   const manifestJson = fse.readJsonSync(manifestJsonOriginalFilePath);
   manifestJson.version = pkgInfo.version;
