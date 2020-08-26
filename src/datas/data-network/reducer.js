@@ -1,4 +1,4 @@
-import { ADD_IN_NETWORK_LIST, UPDATE_NETWORK_RSP_DATA } from './action';
+import { ADD_IN_NETWORK_LIST, CLEAR_NETWORK_LIST, UPDATE_NETWORK_RSP_DATA } from './action';
 
 const initialState = {
   list: [],
@@ -36,9 +36,16 @@ export default function networkInfo(state = initialState, action) {
         list: [...state.list, data],
       };
       break;
+
     case UPDATE_NETWORK_RSP_DATA:
       update = {
         list: getNewList(state.list, data.id, data.jsonData),
+      };
+      break;
+
+    case CLEAR_NETWORK_LIST:
+      update = {
+        list: [],
       };
       break;
     default:

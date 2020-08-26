@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List, Tag } from 'antd';
+import { Button, Col, Divider, List, Row, Tag } from 'antd';
+
+import { clearNetworkList } from '../../datas/data-network';
 
 import './index.less';
 
@@ -9,11 +11,24 @@ class PageHome extends Component {
     this.props.history.push(`/detail/${id}`);
   };
 
+  handleClear = () => {
+    this.props.clearNetworkList();
+  };
+
   render() {
     const { list } = this.props;
 
     return (
       <div className="page-home">
+
+        <Row>
+          <Col span={8} offset={16}>
+            <Button type="danger" style={{ 'float': 'right' }} onClick={this.handleClear}>清空列表</Button>
+          </Col>
+        </Row>
+
+        <Divider />
+
         <List
           footer={<div>总共{list.length}条数据</div>}
           className="network-list"
@@ -55,7 +70,11 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    clearNetworkList: () => {
+      return dispatch(clearNetworkList());
+    },
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PageHome);
