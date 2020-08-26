@@ -106,4 +106,5 @@ dist
 .idea
 
 build
+chrome-extensions
 release/v*
