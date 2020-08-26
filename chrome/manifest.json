@@ -1,7 +1,7 @@
 {
-  "name": "mockstar devtools",
+  "name": "MockStar",
   "version": "1.0.0",
-  "description": "mockstar 调试工具辅助 mock server",
+  "description": "MockStar 调试工具用于 mock server",
   "devtools_page": "devtools.html",
   "manifest_version": 2,
   "icons": {
