@@ -88,7 +88,7 @@ class PageDetail extends Component {
         </PageHeader>
 
         <Tabs defaultActiveKey={currentNetwork.mockstar ? '3' : '2'}>
-          <Tabs.TabPane tab={`请求详情(id=${id})`} key="1">
+          <Tabs.TabPane tab={`请求详情(序号=${id})`} key="1">
             <Card title={currentNetwork.request.url} bordered={false}>
               <Input.TextArea
                 value={JSON.stringify(currentNetwork, null, 2)}
