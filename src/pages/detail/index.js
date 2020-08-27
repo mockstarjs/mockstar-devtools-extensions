@@ -29,6 +29,14 @@ class PageDetail extends Component {
     });
   };
 
+  handleLoadTree = (keys, event) => {
+    console.log('Trigger success_json_file.json', keys, event);
+
+    this.setState({
+      selectedTreeKey: keys[0],
+    });
+  };
+
   handleDownload = (treeNode) => {
     if (!treeNode) {
       console.log('treeNode is undefined!');
@@ -95,6 +103,7 @@ class PageDetail extends Component {
                   defaultExpandAll
                   defaultSelectedKeys={[selectedTreeKey]}
                   onSelect={this.handleSelectTree}
+                  onLoad={this.handleLoadTree}
                   treeData={treeData}
                 />
               </Col>

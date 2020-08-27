@@ -27,8 +27,8 @@ function createFolderTree(network) {
     children: [
       treeNodeMap.indexJs,
       treeNodeMap.configJson,
-      treeNodeMap.baseJs,
-      treeNodeMap.rEADMEMd,
+      { ...treeNodeMap.baseJs, className: 'extra-code' },
+      { ...treeNodeMap.rEADMEMd, className: 'extra-code' },
       {
         ...treeNodeMap.mockModules,
         children: [{
@@ -39,21 +39,24 @@ function createFolderTree(network) {
           ],
         }, {
           ...treeNodeMap.mockModulesError100000,
+          className: 'extra-code',
           children: [
             treeNodeMap.mockModulesError100000ConfigJson,
             treeNodeMap.mockModulesError100000IndexJs,
           ],
         }, {
           ...treeNodeMap.mockModulesSuccessJsModule,
+          className: 'extra-code',
           children: [
             treeNodeMap.mockModulesSuccessJsModuleConfigJson,
             treeNodeMap.mockModulesSuccessJsModuleIndexJs,
           ],
         },
-          treeNodeMap.mockModulesSuccessJsonFileJson,
+          { ...treeNodeMap.mockModulesSuccessJsonFileJson, className: 'extra-code' },
         ],
       }, {
         ...treeNodeMap.static,
+        className: 'extra-code',
         children: [{
           ...treeNodeMap.staticSub,
           children: [
