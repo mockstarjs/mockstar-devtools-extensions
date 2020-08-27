@@ -17,13 +17,12 @@ const defaultData = {
  * @returns {Promise}
  */
 function getSuccessData(data) {
-  return Promise.resolve(data)
-    .then(function (resultData) {
-      return {
-        retcode: 0,
-        result: Object.assign({}, defaultData, resultData),
-      };
-    });
+  return Promise.resolve(data).then(function (resultData) {
+    return {
+      retcode: 0,
+      result: Object.assign({}, defaultData, resultData),
+    };
+  });
 }
 
 /**
@@ -34,18 +33,17 @@ function getSuccessData(data) {
  * @returns {Promise}
  */
 function getErrorData(errCode, errMsg) {
-  return Promise.resolve(errCode)
-    .then(function (resultCode) {
-      let obj = {
-        retcode: resultCode,
-      };
+  return Promise.resolve(errCode).then(function (resultCode) {
+    let obj = {
+      retcode: resultCode,
+    };
 
-      if (errMsg) {
-        obj.err_msg = errMsg;
-      }
+    if (errMsg) {
+      obj.err_msg = errMsg;
+    }
 
-      return obj;
-    });
+    return obj;
+  });
 }
 
 module.exports = {
