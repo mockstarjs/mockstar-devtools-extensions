@@ -25,10 +25,10 @@ function createFolderTree(network) {
     ...treeNodeMap.rootNode,
     title: mockerName,
     children: [
-      treeNodeMap.rEADMEMd,
-      treeNodeMap.baseJs,
-      treeNodeMap.configJson,
       treeNodeMap.indexJs,
+      treeNodeMap.configJson,
+      treeNodeMap.baseJs,
+      treeNodeMap.rEADMEMd,
       {
         ...treeNodeMap.mockModules,
         children: [{
