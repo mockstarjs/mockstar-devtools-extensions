@@ -168,7 +168,7 @@ function getTreeNodeConfigJson(network, treeNodeMap) {
   const data = {
     'description': `description for ${treeNodeMap.mocker.title}`,
     'route': urlParseResult.pathname,
-    'defaultModule': 'success',
+    'defaultModule': 'debug',
     'method': method,
     'tags': [
       'tag1',
