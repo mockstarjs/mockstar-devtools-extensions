@@ -20,9 +20,11 @@ function createFolderTree(network) {
 
   const treeNodeMap = getTreeNodeMap(treeNodeMapJson, businessMocker);
 
+  // 更新
+  treeNodeMap.rootNode.title = mockerName;
+
   const treeData = [{
     ...treeNodeMap.rootNode,
-    title: mockerName,
     children: [
       treeNodeMap.indexJs,
       treeNodeMap.configJson,
@@ -64,7 +66,7 @@ function createFolderTree(network) {
       }],
   }];
 
-  return { treeData, treeNodeMap };
+  return { treeData, treeNodeMap, businessMocker };
 }
 
 function getMockerName(url) {
