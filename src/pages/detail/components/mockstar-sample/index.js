@@ -3,35 +3,29 @@ import { Button, Card, Col, Form, Input, Modal, Row, Tree } from 'antd';
 
 import axios from 'axios';
 
+import CreateMockerDlg from './create-mocker-dlg';
+
 import { createFolderTree, downloadSampleCode } from '../../business';
 
 import './index.less';
 
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 export default class MockStarSample extends Component {
   constructor(...props) {
     super(...props);
 
     this.state = {
       selectedTreeKey: 'mockModulesDebugIndexJs',
-      showSaveSampleDlg: false,
+      isShowCreateMockerDlg: false,
       mockServerPath: '',
+      isMockStarNotStarted: false
     };
-
-    this.formRef = React.createRef();
   }
 
   handleSelectTree = (keys, event) => {
     console.log('Select Tree Node', keys, event);
 
     this.setState({
-      selectedTreeKey: keys[0],
+      selectedTreeKey: keys[0]
     });
   };
 
@@ -49,11 +43,7 @@ export default class MockStarSample extends Component {
     downloadSampleCode(treeNode.content, treeNode.title);
   };
 
-  handleShowSaveSampleDlg = () => {
-    this.setState({
-      showSaveSampleDlg: true,
-    });
-
+  handleShowCreateMockerDlg = () => {
     axios.get('http://127.0.0.1:9527/mockstar-cgi/detail')
       .then((res) => {
         console.log(res);
@@ -62,52 +52,36 @@ export default class MockStarSample extends Component {
 
         this.setState({
           mockServerPath,
+          isShowCreateMockerDlg: true,
+          isMockStarNotStarted: false
         });
 
-        this.formRef.current.setFieldsValue({
-          parentPath: mockServerPath,
-        });
+        // this.formRef.current.setFieldsValue({
+        //   parentPath: mockServerPath
+        // });
       })
       .catch((err) => {
-        console.error(err);
+        console.error(1111, err);
+
+        this.setState({
+          isShowCreateMockerDlg: true,
+          isMockStarNotStarted: true
+        });
       });
   };
 
-  handleSaveSampleDlgOk = () => {
+  changeShowCreateMockerDlg = (isShow) => {
     this.setState({
-      showSaveSampleDlg: false,
+      isShowCreateMockerDlg: isShow
     });
-  };
-
-  handleSaveSampleDlgCancel = () => {
-    this.setState({
-      showSaveSampleDlg: false,
-    });
-  };
-
-  onFinish = values => {
-    console.log('Success:', values);
-  };
-
-  onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
   };
 
   render() {
-    const { selectedTreeKey, showSaveSampleDlg, mockServerPath } = this.state;
+    const { selectedTreeKey, isShowCreateMockerDlg, mockServerPath } = this.state;
     const { currentNetwork } = this.props;
 
     const { treeData, treeNodeMap, businessMocker } = createFolderTree(currentNetwork);
     const treeNode = treeNodeMap[selectedTreeKey];
-
-    console.log(currentNetwork);
-
-    const initialValues = {
-      parentPath: mockServerPath,
-      mockerName: businessMocker.config.name,
-      mockerMethod: businessMocker.config.method,
-      mockerRoute: businessMocker.config.route,
-    };
 
     return (
       <div className="page-detail-mockstar-sample">
@@ -115,7 +89,7 @@ export default class MockStarSample extends Component {
           <Col span={8}>
             <Card title="推荐文件目录"
                   extra={
-                    <Button type="primary" onClick={this.handleShowSaveSampleDlg}>生成到项目中</Button>
+                    <Button type="primary" onClick={this.handleShowCreateMockerDlg}>生成到项目中</Button>
                   }
                   style={{ minWidth: '300px' }}
             >
@@ -143,54 +117,17 @@ export default class MockStarSample extends Component {
           </Col>
         </Row>
 
-        <Modal
-          title="生成到项目中"
-          visible={showSaveSampleDlg}
-          onOk={this.handleSaveSampleDlgOk}
-          onCancel={this.handleSaveSampleDlgCancel}
-          width={'90%'}
-        >
-          <Form
-            layout="vertical"
-            ref={this.formRef}
-            initialValues={initialValues}
-            onFinish={this.onFinish}
-            onFinishFailed={this.onFinishFailed}>
-            <Form.Item
-              label="父级目录"
-              name="parentPath"
-              rules={[{ required: true, message: 'Please input your parentPath!' }]}>
-              <Input />
-            </Form.Item>
 
-            <Form.Item
-              label="桩数据文件夹名字"
-              name="mockerName"
-              rules={[{ required: true, message: 'Please input your mockerName!' }]}>
-              <Input />
-            </Form.Item>
+        {
+          isShowCreateMockerDlg ? (
+            <CreateMockerDlg
+              businessMocker={businessMocker}
+              mockServerPath={mockServerPath}
+              changeShowCreateMockerDlg={this.changeShowCreateMockerDlg}
+            />
+          ) : null
+        }
 
-            <Form.Item
-              label="HTTP Method"
-              name="mockerMethod"
-              rules={[{ required: true, message: 'Please input your mockerMethod!' }]}>
-              <Input readOnly/>
-            </Form.Item>
-
-            <Form.Item
-              label="路由"
-              name="mockerRoute"
-              rules={[{ required: true, message: 'Please input your mockerRoute!' }]}>
-              <Input />
-            </Form.Item>
-
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                提交
-              </Button>
-            </Form.Item>
-          </Form>
-        </Modal>
       </div>
     );
   }
