@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, Input, Tabs } from 'antd';
+import { Tabs } from 'antd';
 
 import TopHeader from './components/top-header';
-import MockStarCms from './components/mockstar-cms';
+import RequestDetail from './components/request-detail';
 import MockStarSample from './components/mockstar-sample';
+import MockStarCms from './components/mockstar-cms';
 
 import './index.less';
 
 class PageDetail extends Component {
+  /**
+   * 跳转到首页
+   */
   gotoHomePage = () => {
     this.props.history.push(`/`);
   };
 
+  /**
+   * 获得当前的请求对象
+   * @return {Object}
+   */
   getCurrentNetwork = () => {
     const id = parseInt(this.props.match.params.id);
 
@@ -23,27 +31,25 @@ class PageDetail extends Component {
     const id = this.props.match.params.id;
     const currentNetwork = this.getCurrentNetwork();
 
+    // 默认激活的 tab，优先是 mockstar
+    const defaultActiveKey = currentNetwork.mockstar ? 'mockstar-cms' : 'mockstar-sample';
+
     return (
       <div className="page-detail">
         <TopHeader currentNetwork={currentNetwork} gotoHomePage={this.gotoHomePage} />
 
-        <Tabs defaultActiveKey={currentNetwork.mockstar ? '3' : '2'}>
-          <Tabs.TabPane tab={`请求详情(序号=${id})`} key="1">
-            <Card title={currentNetwork.request.url} bordered={false}>
-              <Input.TextArea
-                value={JSON.stringify(currentNetwork, null, 2)}
-                autoSize={{ minRows: 3 }}
-              />
-            </Card>
+        <Tabs defaultActiveKey={defaultActiveKey}>
+          <Tabs.TabPane tab={`请求详情(序号=${id})`} key="request-detail">
+            <RequestDetail currentNetwork={currentNetwork} />
           </Tabs.TabPane>
 
-          <Tabs.TabPane tab="mockstar样例代码" key="2">
+          <Tabs.TabPane tab="mockstar样例代码" key="mockstar-sample">
             <MockStarSample currentNetwork={currentNetwork} />
           </Tabs.TabPane>
 
           {
             currentNetwork.mockstar ? (
-              <Tabs.TabPane tab="mockstar简易操作" key="3">
+              <Tabs.TabPane tab="mockstar简易操作" key="mockstar-cms">
                 <MockStarCms mockerName={currentNetwork.mockstar.mocker} />
               </Tabs.TabPane>
             ) : null
