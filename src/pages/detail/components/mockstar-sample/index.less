@@ -1,3 +1,27 @@
 .page-detail-mockstar-sample {
-    height: 100%;
+    .ant-tree {
+        .ant-tree-treenode {
+            span {
+                color: blue;
+            }
+
+            &.ant-tree-treenode-selected {
+                span {
+                    color: #fff;
+                }
+            }
+
+            &.extra-code {
+                &.ant-tree-treenode-selected {
+                    span {
+                        color: #fff;
+                    }
+                }
+
+                span {
+                    color: grey;
+                }
+            }
+        }
+    }
 }

@@ -26,8 +26,8 @@ function createFolderTree(network) {
     children: [
       treeNodeMap.indexJs,
       treeNodeMap.configJson,
-      { ...treeNodeMap.baseJs, className: 'extra-code' },
-      { ...treeNodeMap.rEADMEMd, className: 'extra-code' },
+      addExtraTag(treeNodeMap.baseJs),
+      addExtraTag(treeNodeMap.rEADMEMd),
       {
         ...treeNodeMap.mockModules,
         children: [{
@@ -37,32 +37,29 @@ function createFolderTree(network) {
             treeNodeMap.mockModulesDebugIndexJs,
           ],
         }, {
-          ...treeNodeMap.mockModulesError100000,
-          className: 'extra-code',
+          ...addExtraTag(treeNodeMap.mockModulesError100000),
           children: [
-            treeNodeMap.mockModulesError100000ConfigJson,
-            treeNodeMap.mockModulesError100000IndexJs,
+            addExtraTag(treeNodeMap.mockModulesError100000ConfigJson),
+            addExtraTag(treeNodeMap.mockModulesError100000IndexJs),
           ],
         }, {
-          ...treeNodeMap.mockModulesSuccessJsModule,
-          className: 'extra-code',
+          ...addExtraTag(treeNodeMap.mockModulesSuccessJsModule),
           children: [
-            treeNodeMap.mockModulesSuccessJsModuleConfigJson,
-            treeNodeMap.mockModulesSuccessJsModuleIndexJs,
+            addExtraTag(treeNodeMap.mockModulesSuccessJsModuleConfigJson),
+            addExtraTag(treeNodeMap.mockModulesSuccessJsModuleIndexJs),
           ],
         },
-          { ...treeNodeMap.mockModulesSuccessJsonFileJson, className: 'extra-code' },
+          addExtraTag(treeNodeMap.mockModulesSuccessJsonFileJson),
         ],
       }, {
-        ...treeNodeMap.static,
-        className: 'extra-code',
+        ...addExtraTag(treeNodeMap.static),
         children: [{
-          ...treeNodeMap.staticSub,
+          ...addExtraTag(treeNodeMap.staticSub),
           children: [
-            treeNodeMap.staticSubSomeWorkflowPng,
+            addExtraTag(treeNodeMap.staticSubSomeWorkflowPng),
           ],
         },
-          treeNodeMap.staticSomeDescribPng,
+          addExtraTag(treeNodeMap.staticSomeDescribPng),
         ],
       }],
   }];
@@ -89,6 +86,10 @@ function getTreeNodeMap(treeNodeMapJson, businessMocker) {
   }
 
   return map;
+}
+
+function addExtraTag(treeNode) {
+  return { ...treeNode, className: 'extra-code' };
 }
 
 function downloadSampleCode(content, filename) {

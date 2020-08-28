@@ -71,6 +71,7 @@ export default class MockStarSample extends Component {
                   extra={
                     <Button type="primary" onClick={this.handleShowSaveSampleDlg}>生成到项目中</Button>
                   }
+                  style={{ minWidth: '300px' }}
             >
               <Tree.DirectoryTree
                 defaultExpandAll
