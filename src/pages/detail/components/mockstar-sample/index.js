@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Col, Input, Row, Tree } from 'antd';
+import { Button, Card, Col, Input, Modal, Row, Tree } from 'antd';
 
 import { createFolderTree, downloadSampleCode } from '../../business';
 
@@ -11,6 +11,7 @@ export default class MockStarSample extends Component {
 
     this.state = {
       selectedTreeKey: 'mockModulesDebugIndexJs',
+      showSaveSampleDlg: false,
     };
   }
 
@@ -36,8 +37,27 @@ export default class MockStarSample extends Component {
     downloadSampleCode(treeNode.content, treeNode.title);
   };
 
+  handleShowSaveSampleDlg = () => {
+    this.setState({
+      showSaveSampleDlg: true,
+    });
+
+  };
+
+  handleSaveSampleDlgOk = () => {
+    this.setState({
+      showSaveSampleDlg: false,
+    });
+  };
+
+  handleSaveSampleDlgCancel = () => {
+    this.setState({
+      showSaveSampleDlg: false,
+    });
+  };
+
   render() {
-    const { selectedTreeKey } = this.state;
+    const { selectedTreeKey, showSaveSampleDlg } = this.state;
     const { currentNetwork } = this.props;
 
     const { treeData, treeNodeMap } = createFolderTree(currentNetwork);
@@ -47,16 +67,22 @@ export default class MockStarSample extends Component {
       <div className="page-detail-mockstar-sample">
         <Row>
           <Col span={8}>
-            <Tree.DirectoryTree
-              defaultExpandAll
-              defaultSelectedKeys={[selectedTreeKey]}
-              onSelect={this.handleSelectTree}
-              treeData={treeData}
-            />
+            <Card title="推荐文件目录"
+                  extra={
+                    <Button type="primary" onClick={this.handleShowSaveSampleDlg}>生成到项目中</Button>
+                  }
+            >
+              <Tree.DirectoryTree
+                defaultExpandAll
+                defaultSelectedKeys={[selectedTreeKey]}
+                onSelect={this.handleSelectTree}
+                treeData={treeData}
+              />
+            </Card>
           </Col>
 
           <Col span={16}>
-            <Card title={`${(treeNode && treeNode.path) || '请选择'}`}
+            <Card title={`预览 ${(treeNode && treeNode.path)}`}
                   extra={<Button type="primary" onClick={() => {
                     this.handleDownload(treeNode);
                   }}>单独下载该文件</Button>}
@@ -69,6 +95,17 @@ export default class MockStarSample extends Component {
             </Card>
           </Col>
         </Row>
+
+        <Modal
+          title="生成到项目中"
+          visible={showSaveSampleDlg}
+          onOk={this.handleSaveSampleDlgOk}
+          onCancel={this.handleSaveSampleDlgCancel}
+        >
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </Modal>
       </div>
     );
   }
