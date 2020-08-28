@@ -44,7 +44,7 @@ export default class MockStarSample extends Component {
     const treeNode = treeNodeMap[selectedTreeKey];
 
     return (
-      <div className="mockstar-sample">
+      <div className="page-detail-mockstar-sample">
         <Row>
           <Col span={8}>
             <Tree.DirectoryTree
