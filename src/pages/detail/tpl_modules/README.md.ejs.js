@@ -1,5 +1,5 @@
 module.exports = `
-# <%= mockerConfig.config.name %> 
+# <%= businessMocker.config.name %>
 
 【接口的描述，建议可以适当补充一些图片】
 

@@ -70,14 +70,18 @@ paths.forEach((entry) => {
 });
 
 // 保存 tplIndexRequireArr 到 index.js
-fse.outputFileSync(path.join(OUTPUT_PATH, 'index.js'), `module.exports = {${tplIndexRequireArr.join(',')}}`);
+fse.outputFileSync(path.join(OUTPUT_PATH, 'index.js'), [
+  '// 注意：tpl_modules 目录所有的文件均为自动生成',
+  '// 请执行 node scripts/auto-generate-tpl.js 来生成',
+  `module.exports = {${tplIndexRequireArr.join(',')}}`,
+].join('\n'));
 
 // 保存一份 treeNodeMap
 fse.outputJsonSync(path.join(OUTPUT_PATH, 'tree-node-map.json'), treeNodeMap);
 
-console.log(arr);
-console.log(treeNodeMap);
-console.log(tplIndexRequireArr);
+// console.log(arr);
+// console.log(treeNodeMap);
+// console.log(tplIndexRequireArr);
 
 function getTreeNodeKey(relativePath) {
   const str = getTreeNodePath(relativePath)

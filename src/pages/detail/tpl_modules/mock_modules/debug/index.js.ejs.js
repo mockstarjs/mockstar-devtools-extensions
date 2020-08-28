@@ -7,7 +7,7 @@ module.exports = `
  * @return {Promise|*}
  */
 module.exports = function (params, req) {
-  return <%- JSON.stringify(mockerConfig.config.debugMockModuleJsonData, null, 2); %>;
+  return <%- JSON.stringify(businessMocker.debugMockModuleJsonData, null, 2); %>;
 };
 
 `;
