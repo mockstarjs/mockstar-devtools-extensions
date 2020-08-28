@@ -9,7 +9,7 @@ const OUTPUT_PATH = path.join(__dirname, '../src/pages/detail/tpl_modules');
 
 const paths = walkSync.entries(TPL_PATH);
 
-console.log(paths, OUTPUT_PATH);
+// console.log(paths, OUTPUT_PATH);
 
 const arr = [];
 
@@ -81,7 +81,7 @@ fse.outputJsonSync(path.join(OUTPUT_PATH, 'tree-node-map.json'), treeNodeMap);
 
 // console.log(arr);
 // console.log(treeNodeMap);
-// console.log(tplIndexRequireArr);
+console.log(tplIndexRequireArr);
 
 function getTreeNodeKey(relativePath) {
   const str = getTreeNodePath(relativePath)
