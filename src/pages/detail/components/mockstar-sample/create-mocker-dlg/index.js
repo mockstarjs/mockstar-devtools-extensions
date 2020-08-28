@@ -1,32 +1,16 @@
 import React, { Component } from 'react';
-import { Button, Form, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal, Space } from 'antd';
 
 import './index.less';
 
 export default class MockStarSample extends Component {
-  constructor(...props) {
-    super(...props);
-
-    this.state = {
-      selectedTreeKey: 'mockModulesDebugIndexJs',
-      showSaveSampleDlg: false,
-      mockServerPath: '',
-      isMockStarNotStarted: false
-    };
-
-    this.formRef = React.createRef();
-  }
-
-  handleSaveSampleDlgOk = () => {
-    this.props.changeShowCreateMockerDlg(false);
-  };
-
-  handleSaveSampleDlgCancel = () => {
+  handleHideDlg = () => {
     this.props.changeShowCreateMockerDlg(false);
   };
 
   onFinish = values => {
     console.log('Success:', values);
+    this.props.changeShowCreateMockerDlg(false);
   };
 
   onFinishFailed = errorInfo => {
@@ -40,21 +24,19 @@ export default class MockStarSample extends Component {
       parentPath: mockServerPath,
       mockerName: businessMocker.config.name,
       mockerMethod: businessMocker.config.method,
-      mockerRoute: businessMocker.config.route
+      mockerRoute: businessMocker.config.route,
     };
 
     return (
       <Modal
         title="创建 mocker"
         visible={true}
-        onOk={this.handleSaveSampleDlgOk}
-        onCancel={this.handleSaveSampleDlgCancel}
         width={'90%'}
         footer={null}
+        onCancel={this.handleHideDlg}
       >
         <Form
           layout="vertical"
-          ref={this.formRef}
           initialValues={initialValues}
           onFinish={this.onFinish}
           onFinishFailed={this.onFinishFailed}>
@@ -62,7 +44,7 @@ export default class MockStarSample extends Component {
             label="父级目录"
             name="parentPath"
             rules={[{ required: true, message: 'Please input your parentPath!' }]}>
-            <Input />
+            <Input disabled/>
           </Form.Item>
 
           <Form.Item
@@ -76,7 +58,7 @@ export default class MockStarSample extends Component {
             label="HTTP Method"
             name="mockerMethod"
             rules={[{ required: true, message: 'Please input your mockerMethod!' }]}>
-            <Input readOnly />
+            <Input disabled/>
           </Form.Item>
 
           <Form.Item
@@ -86,10 +68,11 @@ export default class MockStarSample extends Component {
             <Input />
           </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              提交
-            </Button>
+          <Form.Item style={{ width: '130px', margin: 'auto' }}>
+            <Space>
+              <Button onClick={this.handleHideDlg}> 返回 </Button>
+              <Button type="primary" htmlType="submit"> 提交 </Button>
+            </Space>
           </Form.Item>
         </Form>
       </Modal>
