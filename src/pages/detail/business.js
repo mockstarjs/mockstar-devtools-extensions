@@ -9,17 +9,16 @@ function createFolderTree(network) {
   const method = network.request.method;
   const urlParseResult = urlParse(network.request.url);
 
-  const mockerConfig = {
+  const businessMocker = {
     config: {
-      description: `description for ${mockerName}`,
       name: mockerName,
       route: urlParseResult.pathname,
       method: method,
-      debugMockModuleJsonData: network.response.jsonData,
     },
+    debugMockModuleJsonData: network.response.jsonData,
   };
 
-  const treeNodeMap = getTreeNodeMap(treeNodeMapJson, mockerConfig);
+  const treeNodeMap = getTreeNodeMap(treeNodeMapJson, businessMocker);
 
   const treeData = [{
     ...treeNodeMap.rootNode,
@@ -77,13 +76,13 @@ function getMockerName(url) {
   return pathnameArr[pathnameArr.length - 1];
 }
 
-function getTreeNodeMap(treeNodeMapJson, mockerConfig) {
+function getTreeNodeMap(treeNodeMapJson, businessMocker) {
   const map = {};
 
   for (const treeNodeMapJsonKey in treeNodeMapJson) {
     const curItem = treeNodeMapJson[treeNodeMapJsonKey];
     if (curItem.isLeaf && curItem.contentModuleName) {
-      curItem.content = ejs.render(tplModules[curItem.contentModuleName], { mockerConfig });
+      curItem.content = ejs.render(tplModules[curItem.contentModuleName], { businessMocker });
     }
 
     map[treeNodeMapJsonKey] = curItem;
