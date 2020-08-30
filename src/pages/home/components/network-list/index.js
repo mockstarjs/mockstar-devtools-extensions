@@ -21,6 +21,15 @@ export default class PageHomeNetworkList extends Component {
             }}>
               <div>
                 <Tag color="red">{item.id}</Tag>
+                <Tag color={item.request.method === 'GET' ? '#2db7f5' : '#87d068'}>{item.request.method}</Tag>
+
+                {
+                  item.mockerItem ? (
+                    <>
+                      <Tag color="#108ee9">{item.mockerItem.name}</Tag>
+                    </>
+                  ) : null
+                }
 
                 {
                   item.mockstar ? (
@@ -31,7 +40,6 @@ export default class PageHomeNetworkList extends Component {
                   ) : null
                 }
 
-                <Tag color={item.request.method === 'GET' ? '#2db7f5' : '#87d068'}>{item.request.method}</Tag>
                 <span>{item.request.url}</span>
               </div>
             </List.Item>

@@ -89,7 +89,7 @@ export default class MockStarSample extends Component {
           console.log(`url=${requestURL}`, queryData, data);
         }
 
-        if (data.retcode === 200) {
+        if (data.retcode === 0) {
           console.log(data, 'success');
           return {
             isSuccess: true,
