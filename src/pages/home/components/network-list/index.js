@@ -26,7 +26,7 @@ export default class PageHomeNetworkList extends Component {
                 {
                   item.mockerItem ? (
                     <>
-                      <Tag color="#108ee9">{item.mockerItem.name}</Tag>
+                      <Tag color="#108ee9">已匹配：{item.mockerItem.name}</Tag>
                     </>
                   ) : null
                 }
@@ -34,8 +34,8 @@ export default class PageHomeNetworkList extends Component {
                 {
                   item.mockstar ? (
                     <>
-                      <Tag color="#f50">{item.mockstar.mocker}</Tag>
-                      <Tag color="#f50">{item.mockstar.mockModule}</Tag>
+                      <Tag color="#f50">桩对象：{item.mockstar.mocker}</Tag>
+                      <Tag color="#f50">桩数据：{item.mockstar.mockModule}</Tag>
                     </>
                   ) : null
                 }

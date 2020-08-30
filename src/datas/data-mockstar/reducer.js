@@ -5,6 +5,8 @@ const initialState = {
   config: {},
   pkg: {},
   server: 'http://127.0.0.1:9527',
+  isStarted: false,
+  enableWatch: true,
 };
 
 export default function mockStarInfo(state = initialState, action) {
@@ -15,6 +17,7 @@ export default function mockStarInfo(state = initialState, action) {
     case MOCKSTAR_DETAIL_REQUEST:
       update = {
         isLoaded: false,
+        isStarted: false,
       };
       break;
 
@@ -23,6 +26,7 @@ export default function mockStarInfo(state = initialState, action) {
 
       update = {
         isLoaded: true,
+        isStarted: true,
         config,
         pkg,
       };
@@ -31,6 +35,7 @@ export default function mockStarInfo(state = initialState, action) {
     case MOCKSTAR_DETAIL_REQUEST_FAIL:
       update = {
         isLoaded: true,
+        isStarted: false,
       };
       break;
 

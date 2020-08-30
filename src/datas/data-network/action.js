@@ -3,31 +3,40 @@ import urlParse from 'url-parse';
 
 export const ADD_IN_NETWORK_LIST = 'ADD_IN_NETWORK_LIST';
 export const UPDATE_NETWORK_RSP_DATA = 'UPDATE_NETWORK_RSP_DATA';
+export const UPDATE_NETWORK_MOCKER_ITEM_DATA = 'UPDATE_NETWORK_MOCKER_ITEM_DATA';
 export const CLEAR_NETWORK_LIST = 'CLEAR_NETWORK_LIST';
 
 export function addInNetworkList(networkRequest) {
   return (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-      const { mockStarInfo } = getState();
+    // 加入到列表中
+    dispatch({
+      type: ADD_IN_NETWORK_LIST,
+      data: networkRequest,
+    });
 
+    // 若开启了监听本地 MockStar 服务，则需要额外进行匹配处理
+    const { mockStarInfo } = getState();
+    if (mockStarInfo.enableWatch) {
+      // 获取当前 url 对于的 route
       const urlParseResult = urlParse(networkRequest.request.url);
-      const searchOpts = {
-        route: urlParseResult.pathname,
-      };
 
-      // 搜索 route 是否存在本地匹配的
-      axios.post(`${mockStarInfo.server}/mockstar-cgi/search-mocker-list`, searchOpts)
+      // 搜索 route 是否存在本地匹配的，若匹配则更新
+      axios.post(`${mockStarInfo.server}/mockstar-cgi/search-mocker-list`, {
+        route: urlParseResult.pathname,
+      })
         .then((res) => {
           console.log('search-mocker-list then', res);
 
+          // 查询成功之后进行更新
           if (res.data && res.data.retcode === 0) {
-            networkRequest.mockerItem = res.data.result.mockerItem;
+            dispatch({
+              type: UPDATE_NETWORK_MOCKER_ITEM_DATA,
+              data: {
+                id: networkRequest.id,
+                mockerItem: res.data.result.mockerItem,
+              },
+            });
           }
-
-          dispatch({
-            type: ADD_IN_NETWORK_LIST,
-            data: networkRequest,
-          });
         })
         .catch((err) => {
           console.log('search-mocker-list catch', err);
@@ -37,7 +46,7 @@ export function addInNetworkList(networkRequest) {
             data: networkRequest,
           });
         });
-    });
+    }
   };
 }
 

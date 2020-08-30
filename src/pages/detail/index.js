@@ -31,6 +31,10 @@ class PageDetail extends Component {
     const id = this.props.match.params.id;
     const currentNetwork = this.getCurrentNetwork();
 
+    if (!currentNetwork) {
+      return null;
+    }
+
     // 默认激活的 tab，优先是 mockstar
     const defaultActiveKey = currentNetwork.mockstar ? 'mockstar-cms' : 'mockstar-sample';
 

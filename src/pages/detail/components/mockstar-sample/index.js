@@ -21,31 +21,6 @@ export default class MockStarSample extends Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchMockStarDetail();
-  }
-
-  fetchMockStarDetail() {
-    axios.get('http://127.0.0.1:9527/mockstar-cgi/detail')
-      .then((res) => {
-        console.log('fetchMockStarDetail then', res);
-
-        const { mockServerPath } = res.data.config;
-
-        this.setState({
-          mockServerPath,
-          isMockStarStarted: true,
-        });
-      })
-      .catch((err) => {
-        console.log('fetchMockStarDetail catch', err);
-
-        this.setState({
-          isMockStarStarted: false,
-        });
-      });
-  }
-
   handleSelectTree = (keys, event) => {
     console.log('Select Tree Node', keys, event);
 

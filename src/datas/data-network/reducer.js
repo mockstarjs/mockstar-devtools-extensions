@@ -1,4 +1,9 @@
-import { ADD_IN_NETWORK_LIST, CLEAR_NETWORK_LIST, UPDATE_NETWORK_RSP_DATA } from './action';
+import {
+  ADD_IN_NETWORK_LIST,
+  CLEAR_NETWORK_LIST,
+  UPDATE_NETWORK_MOCKER_ITEM_DATA,
+  UPDATE_NETWORK_RSP_DATA,
+} from './action';
 
 const initialState = {
   list: [],
@@ -24,7 +29,6 @@ export default function networkInfo(state = initialState, action) {
       const responseHeaders = data.response.headers;
       const mockstarMockerItem = responseHeaders && responseHeaders.filter(item => item.name === 'x-mockstar-mocker')[0];
       const mockstarMockModuleItem = responseHeaders && responseHeaders.filter(item => item.name === 'x-mockstar-mock-module')[0];
-
       if (mockstarMockerItem && mockstarMockModuleItem) {
         data.mockstar = {
           mocker: mockstarMockerItem.value,
@@ -39,7 +43,13 @@ export default function networkInfo(state = initialState, action) {
 
     case UPDATE_NETWORK_RSP_DATA:
       update = {
-        list: getNewList(state.list, data.id, data.jsonData),
+        list: getNewListWithRspData(state.list, data.id, data.jsonData),
+      };
+      break;
+
+    case UPDATE_NETWORK_MOCKER_ITEM_DATA:
+      update = {
+        list: getNewListWithMockerItemData(state.list, data.id, data.mockerItem),
       };
       break;
 
@@ -55,7 +65,7 @@ export default function networkInfo(state = initialState, action) {
   return Object.keys(update).length ? Object.assign({}, state, update) : state;
 }
 
-function getNewList(list, id, data) {
+function getNewListWithRspData(list, id, data) {
   const newList = [...list];
   for (let i = 0; i < newList.length; i++) {
     const item = newList[i];
@@ -67,3 +77,18 @@ function getNewList(list, id, data) {
 
   return newList;
 }
+
+function getNewListWithMockerItemData(list, id, data) {
+  const newList = [...list];
+
+  for (let i = 0; i < newList.length; i++) {
+    const item = newList[i];
+    if (item.id === id) {
+      item.mockerItem = data;
+      break;
+    }
+  }
+
+  return newList;
+}
+
