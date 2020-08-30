@@ -21,46 +21,50 @@ export const NETWORK_CASE = {
 };
 
 export function addInNetworkList(networkRequest) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     // 加入到列表中
     dispatch({
       type: ADD_IN_NETWORK_LIST,
       data: networkRequest,
     });
 
+    // 更新是否匹配本地 MockStar
+    dispatch(updateNetworkMockerItemData(networkRequest));
+  };
+}
+
+export function updateNetworkMockerItemData(networkRequest) {
+  return (dispatch, getState) => {
     // 若开启了监听本地 MockStar 服务，则需要额外进行匹配处理
     const { mockStarInfo } = getState();
-    if (mockStarInfo.enableWatch) {
-      // 获取当前 url 对于的 route
-      const urlParseResult = urlParse(networkRequest.request.url);
-
-      // 搜索 route 是否存在本地匹配的，若匹配则更新
-      axios.post(`${mockStarInfo.server}/mockstar-cgi/search-mocker-list`, {
-        route: urlParseResult.pathname,
-      })
-        .then((res) => {
-          console.log('search-mocker-list then', res);
-
-          // 查询成功之后进行更新
-          if (res.data && res.data.retcode === 0) {
-            dispatch({
-              type: UPDATE_NETWORK_MOCKER_ITEM_DATA,
-              data: {
-                id: networkRequest.id,
-                mockerItem: res.data.result.mockerItem,
-              },
-            });
-          }
-        })
-        .catch((err) => {
-          console.log('search-mocker-list catch', err);
-
-          dispatch({
-            type: ADD_IN_NETWORK_LIST,
-            data: networkRequest,
-          });
-        });
+    if (!mockStarInfo.enableWatch) {
+      return;
     }
+
+    // 获取当前 url 对于的 route
+    const urlParseResult = urlParse(networkRequest.request.url);
+
+    // 搜索 route 是否存在本地匹配的，若匹配则更新
+    axios.post(`${mockStarInfo.server}/mockstar-cgi/search-mocker-list`, {
+      route: urlParseResult.pathname,
+    })
+      .then((res) => {
+        console.log('search-mocker-list then', res);
+
+        // 查询成功之后进行更新
+        if (res.data && res.data.retcode === 0) {
+          dispatch({
+            type: UPDATE_NETWORK_MOCKER_ITEM_DATA,
+            data: {
+              id: networkRequest.id,
+              mockerItem: res.data.result.mockerItem,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log('search-mocker-list catch', err);
+      });
   };
 }
 

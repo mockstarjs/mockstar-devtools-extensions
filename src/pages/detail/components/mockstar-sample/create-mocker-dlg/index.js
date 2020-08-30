@@ -31,10 +31,10 @@ export default class MockStarSampleCreateMockerDlg extends Component {
   };
 
   render() {
-    const { businessMocker, mockServerPath } = this.props;
+    const { businessMocker, mockStarInfo } = this.props;
 
     const initialValues = {
-      parentPath: mockServerPath,
+      parentPath: mockStarInfo.config.mockServerPath,
       mockerName: businessMocker.config.name,
       mockerMethod: businessMocker.config.method,
       mockerRoute: businessMocker.config.route,

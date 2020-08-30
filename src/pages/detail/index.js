@@ -7,6 +7,8 @@ import RequestDetail from './components/request-detail';
 import MockStarSample from './components/mockstar-sample';
 import MockStarCms from './components/mockstar-cms';
 
+import { updateNetworkMockerItemData } from '../../datas/data-network';
+
 import './index.less';
 
 class PageDetail extends Component {
@@ -35,7 +37,7 @@ class PageDetail extends Component {
       return null;
     }
 
-    const { mockStarInfo } = this.props;
+    const { mockStarInfo, updateNetworkMockerItemData } = this.props;
 
     const shouldShowMockStarTab = currentNetwork.mockstar && currentNetwork.mockerItem;
     const shouldShowSampleTab = !currentNetwork.mockstar || !currentNetwork.mockerItem;
@@ -55,7 +57,11 @@ class PageDetail extends Component {
           {
             shouldShowSampleTab ? (
               <Tabs.TabPane tab="MockStar样例代码" key="mockstar-sample">
-                <MockStarSample currentNetwork={currentNetwork} mockStarInfo={mockStarInfo} />
+                <MockStarSample
+                  currentNetwork={currentNetwork}
+                  mockStarInfo={mockStarInfo}
+                  updateNetworkMockerItemData={updateNetworkMockerItemData}
+                />
               </Tabs.TabPane>
             ) : null
           }
@@ -83,4 +89,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(PageDetail);
+const mapDispatchToProps = dispatch => {
+  return {
+    updateNetworkMockerItemData: (networkRequest) => {
+      return dispatch(updateNetworkMockerItemData(networkRequest));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PageDetail);

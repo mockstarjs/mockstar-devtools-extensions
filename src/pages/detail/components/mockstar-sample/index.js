@@ -18,8 +18,6 @@ export default class MockStarSample extends Component {
     this.state = {
       selectedTreeKey: 'mockModulesDebugIndexJs',
       isShowCreateMockerDlg: false,
-      mockServerPath: '',
-      isMockStarStarted: false,
     };
   }
 
@@ -48,7 +46,7 @@ export default class MockStarSample extends Component {
   handleShowCreateMockerDlg = () => {
     // 只要 MockStar 启动了就可以打开创建对话框
     this.setState({
-      isShowCreateMockerDlg: this.state.isMockStarStarted,
+      isShowCreateMockerDlg: this.props.mockStarInfo.isStarted,
     });
   };
 
@@ -68,6 +66,10 @@ export default class MockStarSample extends Component {
 
         if (data.retcode === 0) {
           console.log(data, 'success');
+
+          // 刷新状态
+          this.props.updateNetworkMockerItemData(this.props.currentNetwork);
+
           return {
             isSuccess: true,
             data,
@@ -96,7 +98,7 @@ export default class MockStarSample extends Component {
   };
 
   render() {
-    const { selectedTreeKey, isShowCreateMockerDlg, mockServerPath } = this.state;
+    const { selectedTreeKey, isShowCreateMockerDlg } = this.state;
     const { currentNetwork, mockStarInfo } = this.props;
 
     const { treeData, treeNodeMap, businessMocker } = createFolderTree(currentNetwork);
@@ -157,7 +159,7 @@ export default class MockStarSample extends Component {
           isShowCreateMockerDlg ? (
             <CreateMockerDlg
               businessMocker={businessMocker}
-              mockServerPath={mockServerPath}
+              mockStarInfo={mockStarInfo}
               changeShowCreateMockerDlg={this.changeShowCreateMockerDlg}
               handleCreateMocker={this.handleCreateMocker}
             />
