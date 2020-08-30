@@ -1,4 +1,10 @@
-import { MOCKSTAR_DETAIL_REQUEST, MOCKSTAR_DETAIL_REQUEST_FAIL, MOCKSTAR_DETAIL_REQUEST_SUCCESS } from './action';
+import {
+  MOCKSTAR_DETAIL_REQUEST,
+  MOCKSTAR_DETAIL_REQUEST_FAIL,
+  MOCKSTAR_DETAIL_REQUEST_SUCCESS,
+  MOCKSTAR_UPDATE_ENABLE_WATCH,
+  MOCKSTAR_UPDATE_SERVER,
+} from './action';
 
 const initialState = {
   isLoaded: false,
@@ -36,6 +42,18 @@ export default function mockStarInfo(state = initialState, action) {
       update = {
         isLoaded: true,
         isStarted: false,
+      };
+      break;
+
+    case MOCKSTAR_UPDATE_ENABLE_WATCH:
+      update = {
+        enableWatch: data,
+      };
+      break;
+
+    case MOCKSTAR_UPDATE_SERVER:
+      update = {
+        server: data,
       };
       break;
 

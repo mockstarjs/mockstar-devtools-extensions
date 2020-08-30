@@ -1,5 +1,5 @@
 import reducer from './reducer';
 
-export { loadMockStarDetail } from './action';
+export { loadMockStarDetail, updateEnableWatch, updateMockStarServer } from './action';
 
 export const mockStarInfo = reducer;

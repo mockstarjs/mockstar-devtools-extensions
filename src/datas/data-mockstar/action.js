@@ -3,6 +3,8 @@ import axios from 'axios';
 export const MOCKSTAR_DETAIL_REQUEST = 'MOCKSTAR_DETAIL_REQUEST';
 export const MOCKSTAR_DETAIL_REQUEST_SUCCESS = 'MOCKSTAR_DETAIL_REQUEST_SUCCESS';
 export const MOCKSTAR_DETAIL_REQUEST_FAIL = 'MOCKSTAR_DETAIL_REQUEST_FAIL';
+export const MOCKSTAR_UPDATE_ENABLE_WATCH = 'MOCKSTAR_UPDATE_ENABLE_WATCH';
+export const MOCKSTAR_UPDATE_SERVER = 'MOCKSTAR_UPDATE_SERVER';
 
 export function loadMockStarDetail() {
   return (dispatch, getState) => {
@@ -31,5 +33,19 @@ export function loadMockStarDetail() {
           });
         });
     });
+  };
+}
+
+export function updateEnableWatch(enableWatch) {
+  return {
+    type: MOCKSTAR_UPDATE_ENABLE_WATCH,
+    data: enableWatch,
+  };
+}
+
+export function updateMockStarServer(server) {
+  return {
+    type: MOCKSTAR_UPDATE_SERVER,
+    data: server,
   };
 }

@@ -6,6 +6,7 @@ import PageHomeTopHeader from './components/top-header';
 import PageHomeNetworkList from './components/network-list';
 
 import { clearNetworkList } from '../../datas/data-network';
+import { updateEnableWatch, updateMockStarServer } from '../../datas/data-mockstar';
 
 import './index.less';
 
@@ -19,13 +20,15 @@ class PageHome extends Component {
   };
 
   render() {
-    const { list, mockStarInfo } = this.props;
+    const { list, mockStarInfo, updateEnableWatch, updateMockStarServer } = this.props;
 
     return (
       <div className="page-home">
         <PageHomeTopHeader
           mockStarInfo={mockStarInfo}
           clearList={this.handleClear}
+          updateEnableWatch={updateEnableWatch}
+          updateMockStarServer={updateMockStarServer}
         />
 
         <Divider />
@@ -52,6 +55,14 @@ const mapDispatchToProps = dispatch => {
   return {
     clearNetworkList: () => {
       return dispatch(clearNetworkList());
+    },
+
+    updateEnableWatch: (enableWatch) => {
+      return dispatch(updateEnableWatch(enableWatch));
+    },
+
+    updateMockStarServer: (server) => {
+      return dispatch(updateMockStarServer(server));
     },
   };
 };
