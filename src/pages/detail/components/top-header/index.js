@@ -5,7 +5,7 @@ import { downloadSampleCode } from '../../business';
 
 import './index.less';
 
-export default class MockStarSample extends Component {
+export default class PageDetailTopHeader extends Component {
   constructor(...props) {
     super(...props);
 

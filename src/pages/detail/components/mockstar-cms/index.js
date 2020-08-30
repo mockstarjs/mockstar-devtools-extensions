@@ -3,7 +3,7 @@ import { Button, Card } from 'antd';
 
 import './index.less';
 
-export default function MockStarCms(props) {
+export default function PageDetailMockStarCms(props) {
   const { mockerName } = props;
 
   const mockstarUrl = `http://127.0.0.1:9527/mockstar-admin/mockers/${mockerName}`;

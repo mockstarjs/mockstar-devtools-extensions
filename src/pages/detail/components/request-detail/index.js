@@ -3,7 +3,7 @@ import { Card, Input } from 'antd';
 
 import './index.less';
 
-export default class MockStarSample extends Component {
+export default class PageDetailRequestDetail extends Component {
   render() {
     const { currentNetwork } = this.props;
 
