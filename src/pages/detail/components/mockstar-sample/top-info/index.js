@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Card, Descriptions, Divider } from 'antd';
+import { Alert, Card, Descriptions, Divider, Tag } from 'antd';
 
 import { NETWORK_CASE } from '../../../../../datas/data-network';
 
@@ -26,6 +26,15 @@ export default class MockStarSampleTopInfo extends Component {
             ) : null
           }
 
+          {
+            currentNetwork.networkCase === NETWORK_CASE.NOT_MATCHED_BUT_MOCK ? (
+              <>
+                <Alert message={`检测到当前返回的是 MockStar 的桩数据，但是并无法在 ${mockStarInfo.server} 匹配！`} type="warning" />
+                <Divider />
+              </>
+            ) : null
+          }
+
 
           <Descriptions size="small" column={1}>
             <Descriptions.Item label="请求地址">{currentNetwork.request.url}</Descriptions.Item>
@@ -35,7 +44,9 @@ export default class MockStarSampleTopInfo extends Component {
                 <>
                   <Descriptions.Item label="请求路由">{currentNetwork.mockerItem.config.route}</Descriptions.Item>
                   <Descriptions.Item label="文件路径">{currentNetwork.mockerItem.basePath}</Descriptions.Item>
-                  <Descriptions.Item label="桩对象">{currentNetwork.mockerItem.name}</Descriptions.Item>
+                  <Descriptions.Item label="桩对象">
+                    <Tag color="#f50">{currentNetwork.mockerItem.name}</Tag>
+                  </Descriptions.Item>
                 </>
               ) : null
             }

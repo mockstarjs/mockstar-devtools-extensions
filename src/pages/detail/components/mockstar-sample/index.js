@@ -102,6 +102,10 @@ export default class MockStarSample extends Component {
     const { treeData, treeNodeMap, businessMocker } = createFolderTree(currentNetwork);
     const treeNode = treeNodeMap[selectedTreeKey];
     const couldCreateMocker = [NETWORK_CASE.NOT_MATCHED_NOT_MOCK].indexOf(currentNetwork.networkCase) > -1;
+    const couldShowSampleCode = [
+      NETWORK_CASE.NOT_MATCHED_NOT_MOCK,
+      NETWORK_CASE.MATCHED_NOT_MOCK,
+    ].indexOf(currentNetwork.networkCase) > -1;
 
     return (
       <div className="page-detail-mockstar-sample">
@@ -110,36 +114,42 @@ export default class MockStarSample extends Component {
             <TopInfo currentNetwork={currentNetwork} mockStarInfo={mockStarInfo} />
           </Col>
 
-          <Col span={8}>
-            <Card title="样例文件目录"
-                  extra={
-                    <Button type="primary" onClick={this.handleShowCreateMockerDlg}
-                            disabled={!couldCreateMocker}>保存到项目中</Button>
-                  }
-                  style={{ minWidth: '300px' }}
-            >
-              <Tree.DirectoryTree
-                defaultExpandAll
-                defaultSelectedKeys={[selectedTreeKey]}
-                onSelect={this.handleSelectTree}
-                treeData={treeData}
-              />
-            </Card>
-          </Col>
+          {
+            couldShowSampleCode ? (
+              <>
+                <Col span={8}>
+                  <Card title="样例文件目录"
+                        extra={
+                          <Button type="primary" onClick={this.handleShowCreateMockerDlg}
+                                  disabled={!couldCreateMocker}>保存到项目中</Button>
+                        }
+                        style={{ minWidth: '300px' }}
+                  >
+                    <Tree.DirectoryTree
+                      defaultExpandAll
+                      defaultSelectedKeys={[selectedTreeKey]}
+                      onSelect={this.handleSelectTree}
+                      treeData={treeData}
+                    />
+                  </Card>
+                </Col>
 
-          <Col span={16}>
-            <Card title={`预览 ${(treeNode && treeNode.path)}`}
-                  extra={<Button type="primary" onClick={() => {
-                    this.handleDownload(treeNode);
-                  }}>单独下载该文件</Button>}
-            >
-              <Input.TextArea
-                value={treeNode && treeNode.content}
-                placeholder="点击左侧目录树查看文件内容"
-                autoSize={{ minRows: 3 }}
-              />
-            </Card>
-          </Col>
+                <Col span={16}>
+                  <Card title={`预览 ${(treeNode && treeNode.path)}`}
+                        extra={<Button type="primary" onClick={() => {
+                          this.handleDownload(treeNode);
+                        }}>单独下载该文件</Button>}
+                  >
+                    <Input.TextArea
+                      value={treeNode && treeNode.content}
+                      placeholder="点击左侧目录树查看文件内容"
+                      autoSize={{ minRows: 3 }}
+                    />
+                  </Card>
+                </Col>
+              </>
+            ) : null
+          }
         </Row>
 
 
