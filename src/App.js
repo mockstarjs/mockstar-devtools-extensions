@@ -10,6 +10,7 @@ import Header from './components/display-header';
 import Footer from './components/display-footer';
 
 import { addInNetworkList, updateNetworkRspData } from './datas/data-network';
+import { loadMockStarDetail } from './datas/data-mockstar';
 import { dataGet, dataMockStar, dataPost } from './datas/data-network/mock';
 
 import pkgInfo from '../package.json';
@@ -37,6 +38,7 @@ export default class App extends Component {
 
   componentDidMount() {
     console.log('==pkgInfo==', pkgInfo);
+
     if (IN_CHROME_DEVTOOLS) {
       // https://developer.chrome.com/extensions/devtools_network#event-onRequestFinished
       window.chrome.devtools.network.onRequestFinished.addListener((request) => {
@@ -70,6 +72,9 @@ export default class App extends Component {
       // componentDidMount will not be called again if you are already at a classes/:id route.
       // https://stackoverflow.com/questions/34468052/react-router-componentdidmount-not-called-when-navigating-to-url
     }
+
+    // 获得 mockstar 的信息
+    this.props.dispatch(loadMockStarDetail());
   }
 
   render() {
