@@ -11,7 +11,7 @@ import Footer from './components/display-footer';
 
 import { addInNetworkList, updateNetworkRspData } from './datas/data-network';
 import { loadMockStarDetail } from './datas/data-mockstar';
-import { dataGet, dataMockStar, dataPost } from './datas/data-network/mock';
+import { dataGet, dataMockStar, dataPost } from './datas/data-network/mock-data';
 
 import pkgInfo from '../package.json';
 
