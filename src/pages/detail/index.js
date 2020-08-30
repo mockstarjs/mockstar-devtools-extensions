@@ -35,6 +35,8 @@ class PageDetail extends Component {
       return null;
     }
 
+    const { mockStarInfo } = this.props;
+
     const shouldShowMockStarTab = currentNetwork.mockstar && currentNetwork.mockerItem;
     const shouldShowSampleTab = !currentNetwork.mockstar || !currentNetwork.mockerItem;
 
@@ -53,7 +55,7 @@ class PageDetail extends Component {
           {
             shouldShowSampleTab ? (
               <Tabs.TabPane tab="MockStar样例代码" key="mockstar-sample">
-                <MockStarSample currentNetwork={currentNetwork} />
+                <MockStarSample currentNetwork={currentNetwork} mockStarInfo={mockStarInfo} />
               </Tabs.TabPane>
             ) : null
           }
@@ -73,10 +75,11 @@ class PageDetail extends Component {
 }
 
 function mapStateToProps(state) {
-  const { networkInfo } = state;
+  const { networkInfo, mockStarInfo } = state;
 
   return {
     list: networkInfo.list,
+    mockStarInfo,
   };
 }
 

@@ -66,6 +66,12 @@ export default class PageDetailTopHeader extends Component {
               </>
             ) : null
           }
+
+          {
+            currentNetwork.mockerItem ? (
+              <Tag color="purple">{currentNetwork.networkCase}</Tag>
+            ) : null
+          }
         </PageHeader>
       </div>
     );

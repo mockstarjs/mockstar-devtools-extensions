@@ -9,6 +9,7 @@ import TopInfo from './top-info';
 import { createFolderTree, downloadSampleCode } from '../../business';
 
 import './index.less';
+import { NETWORK_CASE } from '../../../../datas/data-network';
 
 export default class MockStarSample extends Component {
   constructor(...props) {
@@ -96,22 +97,24 @@ export default class MockStarSample extends Component {
 
   render() {
     const { selectedTreeKey, isShowCreateMockerDlg, mockServerPath } = this.state;
-    const { currentNetwork } = this.props;
+    const { currentNetwork, mockStarInfo } = this.props;
 
     const { treeData, treeNodeMap, businessMocker } = createFolderTree(currentNetwork);
     const treeNode = treeNodeMap[selectedTreeKey];
+    const couldCreateMocker = [NETWORK_CASE.NOT_MATCHED_NOT_MOCK].indexOf(currentNetwork.networkCase) > -1;
 
     return (
       <div className="page-detail-mockstar-sample">
         <Row>
           <Col span={24}>
-            <TopInfo currentNetwork={currentNetwork} mockServerPath={mockServerPath} />
+            <TopInfo currentNetwork={currentNetwork} mockStarInfo={mockStarInfo} />
           </Col>
 
           <Col span={8}>
-            <Card title="推荐文件目录"
+            <Card title="样例文件目录"
                   extra={
-                    <Button type="primary" onClick={this.handleShowCreateMockerDlg}>保存到项目中</Button>
+                    <Button type="primary" onClick={this.handleShowCreateMockerDlg}
+                            disabled={!couldCreateMocker}>保存到项目中</Button>
                   }
                   style={{ minWidth: '300px' }}
             >
