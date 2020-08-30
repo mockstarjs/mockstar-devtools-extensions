@@ -19,8 +19,9 @@ export default class MockStarSampleTopInfo extends Component {
               <>
                 <Alert message={`已在 ${mockStarInfo.server} 成功匹配，但是当前结果返回并不是 MockStar 的桩数据，请确定是否有效设置了代理！`}
                        type="warning" />
-                <Alert message={`whistle 代理设置： /(.*)${currentNetwork.mockerItem.config.route}(.*)/ 127.0.0.1:9527`}
-                       type="warning" />
+                <Alert
+                  message={`whistle 代理设置： /(.*)${currentNetwork.mockerItem.config.route}(.*)/ ${mockStarInfo.server.replace(/^https?:\/\//, '')}`}
+                  type="warning" />
                 <Divider />
               </>
             ) : null

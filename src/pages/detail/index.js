@@ -69,7 +69,10 @@ class PageDetail extends Component {
           {
             shouldShowMockStarTab ? (
               <Tabs.TabPane tab="MockStar简易操作" key="mockstar-cms">
-                <MockStarCms mockerName={currentNetwork.mockstar.mocker} />
+                <MockStarCms
+                  mockerName={currentNetwork.mockstar.mocker}
+                  mockStarInfo={mockStarInfo}
+                />
               </Tabs.TabPane>
             ) : null
           }

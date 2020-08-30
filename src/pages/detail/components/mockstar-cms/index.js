@@ -4,9 +4,9 @@ import { Button, Card } from 'antd';
 import './index.less';
 
 export default function PageDetailMockStarCms(props) {
-  const { mockerName } = props;
+  const { mockerName, mockStarInfo } = props;
 
-  const mockstarUrl = `http://127.0.0.1:9527/mockstar-admin/mockers/${mockerName}`;
+  const mockstarUrl = `${mockStarInfo.server}/mockstar-admin/mockers/${mockerName}`;
 
   return (
     <div className="page-detail-mockstar-cms" style={{ height: 'calc(100vh - 350px)' }}>

@@ -51,8 +51,13 @@ export default class MockStarSample extends Component {
   };
 
   handleCreateMocker = queryData => {
+    const { currentNetwork, mockStarInfo } = this.props;
+
     // 获得 requestURL
-    let requestURL = `http://127.0.0.1:9527/mockstar-cgi/create-mocker`;
+    const requestURL = `${mockStarInfo.server}/mockstar-cgi/create-mocker`;
+
+    // 附加上当前接口请求的数据
+    queryData.debugMockModuleJsonData = currentNetwork.response.jsonData;
 
     console.log(`准备发送请求：${JSON.stringify(queryData)}`);
 
