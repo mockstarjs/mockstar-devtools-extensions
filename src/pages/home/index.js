@@ -26,7 +26,6 @@ class PageHome extends Component {
       <div className="page-home">
         <PageHomeTopHeader
           mockStarInfo={mockStarInfo}
-          clearList={this.handleClear}
           updateEnableWatch={updateEnableWatch}
           updateMockStarServer={updateMockStarServer}
         />
@@ -35,6 +34,7 @@ class PageHome extends Component {
 
         <PageHomeNetworkList
           list={list}
+          clearList={this.handleClear}
           gotoDetailPage={this.gotoDetailPage}
         />
       </div>
