@@ -35,6 +35,16 @@ export default class MockStarSampleTopInfo extends Component {
             ) : null
           }
 
+          {
+            currentNetwork.networkCase === NETWORK_CASE.NOT_MATCHED_NOT_MOCK ? (
+              <>
+                <Alert message={`如果您需要在 ${mockStarInfo.server} 创建桩对象，则可以点击【保存到项目中】，或者在文件目录中选择某一文件之后点击【单独下载该文件】`}
+                       type="info" />
+                <Divider />
+              </>
+            ) : null
+          }
+
 
           <Descriptions size="small" column={1}>
             <Descriptions.Item label="请求地址">{currentNetwork.request.url}</Descriptions.Item>
