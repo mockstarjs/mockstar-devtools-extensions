@@ -6,6 +6,7 @@ export const MOCKSTAR_DETAIL_REQUEST_FAIL = 'MOCKSTAR_DETAIL_REQUEST_FAIL';
 export const MOCKSTAR_INIT_ENABLE_WATCH = 'MOCKSTAR_INIT_ENABLE_WATCH';
 export const MOCKSTAR_UPDATE_ENABLE_WATCH = 'MOCKSTAR_UPDATE_ENABLE_WATCH';
 export const MOCKSTAR_UPDATE_SERVER = 'MOCKSTAR_UPDATE_SERVER';
+export const MOCKSTAR_UPDATE_IS_STARTED = 'MOCKSTAR_UPDATE_IS_STARTED';
 
 export function loadMockStarDetail() {
   return (dispatch, getState) => {
@@ -47,12 +48,19 @@ export function loadMockStarDetail() {
 }
 
 export function updateEnableWatch(enableWatch) {
-  localStorage.setItem('mockstar_enable_watch', enableWatch ? '1' : '0');
+  return (dispatch) => {
+    return new Promise((resolve) => {
+      localStorage.setItem('mockstar_enable_watch', enableWatch ? '1' : '0');
 
-  return {
-    type: MOCKSTAR_UPDATE_ENABLE_WATCH,
-    data: enableWatch,
+      dispatch({
+        type: MOCKSTAR_UPDATE_ENABLE_WATCH,
+        data: enableWatch,
+      });
+
+      resolve(enableWatch);
+    });
   };
+
 }
 
 export function updateMockStarServer(server) {
@@ -68,11 +76,18 @@ export function initEnableWatch() {
       const enableWatch = localStorage.getItem('mockstar_enable_watch') !== '0';
 
       dispatch({
-        type: MOCKSTAR_UPDATE_ENABLE_WATCH,
+        type: MOCKSTAR_INIT_ENABLE_WATCH,
         data: enableWatch,
       });
 
       resolve(enableWatch);
     });
+  };
+}
+
+export function updateIsStarted(isStarted) {
+  return {
+    type: MOCKSTAR_UPDATE_IS_STARTED,
+    data: isStarted,
   };
 }

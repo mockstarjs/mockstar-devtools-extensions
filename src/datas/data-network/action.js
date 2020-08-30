@@ -37,8 +37,16 @@ export function updateNetworkMockerItemData(networkRequest) {
   return (dispatch, getState) => {
     // 若开启了监听本地 MockStar 服务，且服务启动成功，则需要额外进行匹配处理
     const { mockStarInfo } = getState();
+
+    // 如果没有启动，则将 mockerItem 设置为 null
     if (!mockStarInfo.isStarted) {
-      return;
+      return dispatch({
+        type: UPDATE_NETWORK_MOCKER_ITEM_DATA,
+        data: {
+          id: networkRequest.id,
+          mockerItem: null,
+        },
+      });
     }
 
     // 获取当前 url 对于的 route

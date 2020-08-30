@@ -4,8 +4,13 @@ import { connect } from 'react-redux';
 import PageHomeTopHeader from './components/top-header';
 import PageHomeNetworkList from './components/network-list';
 
-import { clearNetworkList } from '../../datas/data-network';
-import { loadMockStarDetail, updateEnableWatch, updateMockStarServer } from '../../datas/data-mockstar';
+import { clearNetworkList, updateNetworkMockerItemData } from '../../datas/data-network';
+import {
+  loadMockStarDetail,
+  updateEnableWatch,
+  updateIsStarted,
+  updateMockStarServer,
+} from '../../datas/data-mockstar';
 
 import './index.less';
 
@@ -19,14 +24,23 @@ class PageHome extends Component {
   };
 
   handleUpdateEnableWatch = (enableWatch) => {
-    // 更新
-    this.props.updateEnableWatch(enableWatch);
+    (async () => {
+      // 更新 enableWatch
+      await this.props.updateEnableWatch(enableWatch);
 
-    // 如果是开启，则需要刷新一次状态
-    if (enableWatch) {
-      // 获得 mockstar 的信息
-      this.props.loadMockStarDetail();
-    }
+      if (enableWatch) {
+        // 如果是开启监听，则需要刷新一次 mockstar 状态
+        await this.props.loadMockStarDetail();
+      } else {
+        // 如果是关闭监听，则需要将 isStarted 设置为 false
+        this.props.updateIsStarted(false);
+      }
+
+      // 更新列表
+      this.props.list.forEach((networkRequest) => {
+        this.props.updateNetworkMockerItemData(networkRequest);
+      });
+    })();
   };
 
   render() {
@@ -75,6 +89,14 @@ const mapDispatchToProps = dispatch => {
 
     updateMockStarServer: (server) => {
       return dispatch(updateMockStarServer(server));
+    },
+
+    updateIsStarted: (isStarted) => {
+      return dispatch(updateIsStarted(isStarted));
+    },
+
+    updateNetworkMockerItemData: (networkRequest) => {
+      return dispatch(updateNetworkMockerItemData(networkRequest));
     },
   };
 };
