@@ -35,8 +35,11 @@ class PageDetail extends Component {
       return null;
     }
 
+    const shouldShowMockStarTab = currentNetwork.mockstar && currentNetwork.mockerItem;
+    const shouldShowSampleTab = !currentNetwork.mockstar || !currentNetwork.mockerItem;
+
     // 默认激活的 tab，优先是 mockstar
-    const defaultActiveKey = currentNetwork.mockstar ? 'mockstar-cms' : 'mockstar-sample';
+    const defaultActiveKey = shouldShowMockStarTab ? 'mockstar-cms' : 'mockstar-sample';
 
     return (
       <div className="page-detail">
@@ -47,12 +50,16 @@ class PageDetail extends Component {
             <RequestDetail currentNetwork={currentNetwork} />
           </Tabs.TabPane>
 
-          <Tabs.TabPane tab="MockStar样例代码" key="mockstar-sample">
-            <MockStarSample currentNetwork={currentNetwork} />
-          </Tabs.TabPane>
+          {
+            shouldShowSampleTab ? (
+              <Tabs.TabPane tab="MockStar样例代码" key="mockstar-sample">
+                <MockStarSample currentNetwork={currentNetwork} />
+              </Tabs.TabPane>
+            ) : null
+          }
 
           {
-            currentNetwork.mockstar ? (
+            shouldShowMockStarTab ? (
               <Tabs.TabPane tab="MockStar简易操作" key="mockstar-cms">
                 <MockStarCms mockerName={currentNetwork.mockstar.mocker} />
               </Tabs.TabPane>

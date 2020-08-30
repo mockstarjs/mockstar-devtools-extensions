@@ -1,6 +1,7 @@
 import {
   ADD_IN_NETWORK_LIST,
   CLEAR_NETWORK_LIST,
+  NETWORK_CASE,
   UPDATE_NETWORK_MOCKER_ITEM_DATA,
   UPDATE_NETWORK_RSP_DATA,
 } from './action';
@@ -35,6 +36,9 @@ export default function networkInfo(state = initialState, action) {
           mockModule: mockstarMockModuleItem.value,
         };
       }
+
+      // 当前请求的场景类型
+      data.networkCase = getNetworkCase(data.mockerItem, data.mockstar);
 
       update = {
         list: [...state.list, data],
@@ -85,6 +89,9 @@ function getNewListWithMockerItemData(list, id, data) {
     const item = newList[i];
     if (item.id === id) {
       item.mockerItem = data;
+
+      // 更新当前请求的场景类型
+      item.networkCase = getNetworkCase(item.mockerItem, item.mockstar);
       break;
     }
   }
@@ -92,3 +99,10 @@ function getNewListWithMockerItemData(list, id, data) {
   return newList;
 }
 
+function getNetworkCase(mockerItem, mockstar) {
+  if (mockerItem) {
+    return mockstar ? NETWORK_CASE.MATCHED_AND_MOCK : NETWORK_CASE.MATCHED_NOT_MOCK;
+  } else {
+    return mockstar ? NETWORK_CASE.NOT_MATCHED_BUT_MOCK : NETWORK_CASE.NOT_MATCHED_NOT_MOCK;
+  }
+}

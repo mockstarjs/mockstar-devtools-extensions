@@ -11,7 +11,7 @@ import Footer from './components/display-footer';
 
 import { addInNetworkList, updateNetworkRspData } from './datas/data-network';
 import { loadMockStarDetail } from './datas/data-mockstar';
-import { dataGet, dataMockStar, dataPost } from './datas/data-network/mock-data';
+import { dataGet, dataMockStar, dataMockStarOther, dataPost } from './datas/data-network/mock-data';
 
 import pkgInfo from '../package.json';
 
@@ -33,6 +33,7 @@ export default class App extends Component {
       this.props.dispatch(addInNetworkList(dataGet));
       this.props.dispatch(addInNetworkList(dataPost));
       this.props.dispatch(addInNetworkList(dataMockStar));
+      this.props.dispatch(addInNetworkList(dataMockStarOther));
     }
   }
 

@@ -6,6 +6,20 @@ export const UPDATE_NETWORK_RSP_DATA = 'UPDATE_NETWORK_RSP_DATA';
 export const UPDATE_NETWORK_MOCKER_ITEM_DATA = 'UPDATE_NETWORK_MOCKER_ITEM_DATA';
 export const CLEAR_NETWORK_LIST = 'CLEAR_NETWORK_LIST';
 
+export const NETWORK_CASE = {
+  // 既没有匹配路由，也不是 mock 数据
+  NOT_MATCHED_NOT_MOCK: 'NOT_MATCHED_NOT_MOCK',
+
+  // 匹配了路由，但不是 mock 数据
+  MATCHED_NOT_MOCK: 'MATCHED_NOT_MOCK',
+
+  // 没有匹配路由，但是 mock 数据
+  NOT_MATCHED_BUT_MOCK: 'NOT_MATCHED_BUT_MOCK',
+
+  // 既匹配了路由，也是 mock 数据
+  MATCHED_AND_MOCK: 'MATCHED_AND_MOCK',
+};
+
 export function addInNetworkList(networkRequest) {
   return (dispatch, getState) => {
     // 加入到列表中
