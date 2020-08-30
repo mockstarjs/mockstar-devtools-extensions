@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Divider } from 'antd';
 
 import PageHomeTopHeader from './components/top-header';
 import PageHomeNetworkList from './components/network-list';
@@ -29,8 +28,6 @@ class PageHome extends Component {
           updateEnableWatch={updateEnableWatch}
           updateMockStarServer={updateMockStarServer}
         />
-
-        <Divider />
 
         <PageHomeNetworkList
           list={list}

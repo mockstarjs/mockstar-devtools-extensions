@@ -30,7 +30,24 @@ export default class PageHomeTopHeader extends Component {
           />
         </Space>
 
-        <Alert message={`port=${mockStarInfo.config.port},rootPath=${mockStarInfo.config.rootPath}`} type="info" />
+        {
+          !mockStarInfo.enableWatch ? (
+            <Alert message={`提示：开启监听之后，可以自动对 xhr 和 fetch 请求进行匹配。`} type="info" />
+          ) : null
+        }
+
+        {
+          mockStarInfo.enableWatch && mockStarInfo.isStarted ? (
+            <Alert message={`正在监听 ${mockStarInfo.server} ...`} type="success" />
+          ) : null
+        }
+
+        {
+          mockStarInfo.enableWatch && !mockStarInfo.isStarted ? (
+            <Alert message={`${mockStarInfo.server} 并没有启动`} type="error" />
+          ) : null
+        }
+
       </div>
     );
   }
