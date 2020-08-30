@@ -43,13 +43,13 @@ class PageDetail extends Component {
             <RequestDetail currentNetwork={currentNetwork} />
           </Tabs.TabPane>
 
-          <Tabs.TabPane tab="mockstar样例代码" key="mockstar-sample">
+          <Tabs.TabPane tab="MockStar样例代码" key="mockstar-sample">
             <MockStarSample currentNetwork={currentNetwork} />
           </Tabs.TabPane>
 
           {
             currentNetwork.mockstar ? (
-              <Tabs.TabPane tab="mockstar简易操作" key="mockstar-cms">
+              <Tabs.TabPane tab="MockStar简易操作" key="mockstar-cms">
                 <MockStarCms mockerName={currentNetwork.mockstar.mocker} />
               </Tabs.TabPane>
             ) : null

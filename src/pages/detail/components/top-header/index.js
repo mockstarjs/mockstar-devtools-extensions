@@ -51,7 +51,7 @@ export default class MockStarSample extends Component {
             <Descriptions.Item label="请求地址">{currentNetwork.request.url}</Descriptions.Item>
             {
               currentNetwork.mockstar ? (
-                <Descriptions.Item label="mockstar">
+                <Descriptions.Item label="MockStar">
                   <Tag color="#f50">{currentNetwork.mockstar.mocker}</Tag>
                   <Tag color="#f50">{currentNetwork.mockstar.mockModule}</Tag>
                 </Descriptions.Item>
