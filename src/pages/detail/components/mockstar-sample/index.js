@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Col, Form, Input, Modal, Row, Tree } from 'antd';
+import { Button, Card, Col, Input, Row, Tree } from 'antd';
 
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ export default class MockStarSample extends Component {
       selectedTreeKey: 'mockModulesDebugIndexJs',
       isShowCreateMockerDlg: false,
       mockServerPath: '',
-      isMockStarNotStarted: false
+      isMockStarNotStarted: false,
     };
   }
 
@@ -25,7 +25,7 @@ export default class MockStarSample extends Component {
     console.log('Select Tree Node', keys, event);
 
     this.setState({
-      selectedTreeKey: keys[0]
+      selectedTreeKey: keys[0],
     });
   };
 
@@ -53,7 +53,7 @@ export default class MockStarSample extends Component {
         this.setState({
           mockServerPath,
           isShowCreateMockerDlg: true,
-          isMockStarNotStarted: false
+          isMockStarNotStarted: false,
         });
 
         // this.formRef.current.setFieldsValue({
@@ -65,14 +65,51 @@ export default class MockStarSample extends Component {
 
         this.setState({
           isShowCreateMockerDlg: true,
-          isMockStarNotStarted: true
+          isMockStarNotStarted: true,
         });
+      });
+  };
+
+  handleCreateMocker = queryData => {
+    // 获得 requestURL
+    let requestURL = `http://127.0.0.1:9527/mockstar-cgi/create-mocker`;
+
+    console.log(`准备发送请求：${JSON.stringify(queryData)}`);
+
+    return axios.post(requestURL, queryData)
+      .then(res => {
+        const { data } = res;
+
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(`url=${requestURL}`, queryData, data);
+        }
+
+        if (data.status === 200) {
+          console.log(data, 'success');
+          return {
+            isSuccess: true,
+            data,
+          };
+        } else {
+          console.log(data.result, 'error');
+          return {
+            isSuccess: false,
+            msg: data.result,
+          };
+        }
+      })
+      .catch(err => {
+        console.log((err && err.message) || err, 'error');
+        return {
+          isSuccess: false,
+          msg: (err && err.message) || err,
+        };
       });
   };
 
   changeShowCreateMockerDlg = (isShow) => {
     this.setState({
-      isShowCreateMockerDlg: isShow
+      isShowCreateMockerDlg: isShow,
     });
   };
 
@@ -89,7 +126,7 @@ export default class MockStarSample extends Component {
           <Col span={8}>
             <Card title="推荐文件目录"
                   extra={
-                    <Button type="primary" onClick={this.handleShowCreateMockerDlg}>生成到项目中</Button>
+                    <Button type="primary" onClick={this.handleShowCreateMockerDlg}>保存到项目中</Button>
                   }
                   style={{ minWidth: '300px' }}
             >
@@ -124,6 +161,7 @@ export default class MockStarSample extends Component {
               businessMocker={businessMocker}
               mockServerPath={mockServerPath}
               changeShowCreateMockerDlg={this.changeShowCreateMockerDlg}
+              handleCreateMocker={this.handleCreateMocker}
             />
           ) : null
         }

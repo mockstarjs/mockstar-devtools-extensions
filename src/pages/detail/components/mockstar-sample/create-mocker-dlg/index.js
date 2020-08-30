@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Input, Modal, Space } from 'antd';
+import { Button, Form, Input, message, Modal, Space } from 'antd';
 
 import './index.less';
 
@@ -10,7 +10,20 @@ export default class MockStarSample extends Component {
 
   onFinish = values => {
     console.log('Success:', values);
-    this.props.changeShowCreateMockerDlg(false);
+
+    this.props.handleCreateMocker(values)
+      .then((data) => {
+        if (data.isSuccess) {
+          message.success(`保存成功！`);
+          this.props.changeShowCreateMockerDlg(false);
+        } else {
+          message.error(`保存失败：${data.msg}`);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error(`保存出现异常：${(err && err.message) || err}`);
+      });
   };
 
   onFinishFailed = errorInfo => {
@@ -44,7 +57,7 @@ export default class MockStarSample extends Component {
             label="父级目录"
             name="parentPath"
             rules={[{ required: true, message: 'Please input your parentPath!' }]}>
-            <Input disabled/>
+            <Input disabled />
           </Form.Item>
 
           <Form.Item
@@ -58,7 +71,7 @@ export default class MockStarSample extends Component {
             label="HTTP Method"
             name="mockerMethod"
             rules={[{ required: true, message: 'Please input your mockerMethod!' }]}>
-            <Input disabled/>
+            <Input disabled />
           </Form.Item>
 
           <Form.Item
