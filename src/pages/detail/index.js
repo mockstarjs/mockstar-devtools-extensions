@@ -12,6 +12,16 @@ import { updateNetworkMockerItemData } from '../../datas/data-network';
 import './index.less';
 
 class PageDetail extends Component {
+  componentDidMount() {
+    const { mockStarInfo, updateNetworkMockerItemData } = this.props;
+    const currentNetwork = this.getCurrentNetwork();
+
+    if (mockStarInfo.isStarted && currentNetwork) {
+      // 进入 detail 页面，如果当前 MockStar 是启动的，则更新一次
+      updateNetworkMockerItemData(currentNetwork);
+    }
+  }
+
   /**
    * 跳转到首页
    */

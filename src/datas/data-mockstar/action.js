@@ -41,7 +41,7 @@ export function loadMockStarDetail() {
             data: err,
           });
 
-          reject(err);
+          resolve(err);
         });
     });
   };
