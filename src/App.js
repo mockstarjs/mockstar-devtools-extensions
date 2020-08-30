@@ -10,7 +10,7 @@ import Header from './components/display-header';
 import Footer from './components/display-footer';
 
 import { addInNetworkList, updateNetworkRspData } from './datas/data-network';
-import { loadMockStarDetail } from './datas/data-mockstar';
+import { initEnableWatch, loadMockStarDetail } from './datas/data-mockstar';
 import { dataGet, dataMockStar, dataMockStarOther, dataPost } from './datas/data-network/mock-data';
 
 import pkgInfo from '../package.json';
@@ -26,15 +26,25 @@ export default class App extends Component {
     // 自定义 id
     this.id = this.props.networkInfo.list.length;
 
-    // debug 调试
-    if (!this.isMocked && !IN_CHROME_DEVTOOLS) {
-      console.log('not in chrome devtools!');
-      this.isMocked = true;
-      this.props.dispatch(addInNetworkList(dataGet));
-      this.props.dispatch(addInNetworkList(dataPost));
-      this.props.dispatch(addInNetworkList(dataMockStar));
-      this.props.dispatch(addInNetworkList(dataMockStarOther));
-    }
+    (async () => {
+      // 获取初始化的 enableWatch
+      const enableWatch = await this.props.dispatch(initEnableWatch());
+
+      if (enableWatch) {
+        // 获得 mockstar 的信息
+        await this.props.dispatch(loadMockStarDetail());
+      }
+
+      // debug 调试
+      if (!this.isMocked && !IN_CHROME_DEVTOOLS) {
+        console.log('not in chrome devtools!');
+        this.isMocked = true;
+        this.props.dispatch(addInNetworkList(dataGet));
+        this.props.dispatch(addInNetworkList(dataPost));
+        this.props.dispatch(addInNetworkList(dataMockStar));
+        this.props.dispatch(addInNetworkList(dataMockStarOther));
+      }
+    })();
   }
 
   componentDidMount() {
@@ -74,8 +84,6 @@ export default class App extends Component {
       // https://stackoverflow.com/questions/34468052/react-router-componentdidmount-not-called-when-navigating-to-url
     }
 
-    // 获得 mockstar 的信息
-    this.props.dispatch(loadMockStarDetail());
   }
 
   render() {

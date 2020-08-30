@@ -35,9 +35,9 @@ export function addInNetworkList(networkRequest) {
 
 export function updateNetworkMockerItemData(networkRequest) {
   return (dispatch, getState) => {
-    // 若开启了监听本地 MockStar 服务，则需要额外进行匹配处理
+    // 若开启了监听本地 MockStar 服务，且服务启动成功，则需要额外进行匹配处理
     const { mockStarInfo } = getState();
-    if (!mockStarInfo.enableWatch) {
+    if (!mockStarInfo.isStarted) {
       return;
     }
 

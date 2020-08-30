@@ -2,6 +2,7 @@ import {
   MOCKSTAR_DETAIL_REQUEST,
   MOCKSTAR_DETAIL_REQUEST_FAIL,
   MOCKSTAR_DETAIL_REQUEST_SUCCESS,
+  MOCKSTAR_INIT_ENABLE_WATCH,
   MOCKSTAR_UPDATE_ENABLE_WATCH,
   MOCKSTAR_UPDATE_SERVER,
 } from './action';
@@ -42,6 +43,12 @@ export default function mockStarInfo(state = initialState, action) {
       update = {
         isLoaded: true,
         isStarted: false,
+      };
+      break;
+
+    case MOCKSTAR_INIT_ENABLE_WATCH:
+      update = {
+        enableWatch: data,
       };
       break;
 
