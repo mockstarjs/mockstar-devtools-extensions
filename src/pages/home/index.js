@@ -5,7 +5,7 @@ import PageHomeTopHeader from './components/top-header';
 import PageHomeNetworkList from './components/network-list';
 
 import { clearNetworkList } from '../../datas/data-network';
-import { updateEnableWatch, updateMockStarServer } from '../../datas/data-mockstar';
+import { loadMockStarDetail, updateEnableWatch, updateMockStarServer } from '../../datas/data-mockstar';
 
 import './index.less';
 
@@ -18,14 +18,25 @@ class PageHome extends Component {
     this.props.clearNetworkList();
   };
 
+  handleUpdateEnableWatch = (enableWatch) => {
+    // 更新
+    this.props.updateEnableWatch(enableWatch);
+
+    // 如果是开启，则需要刷新一次状态
+    if (enableWatch) {
+      // 获得 mockstar 的信息
+      this.props.loadMockStarDetail();
+    }
+  };
+
   render() {
-    const { list, mockStarInfo, updateEnableWatch, updateMockStarServer } = this.props;
+    const { list, mockStarInfo, updateMockStarServer } = this.props;
 
     return (
       <div className="page-home">
         <PageHomeTopHeader
           mockStarInfo={mockStarInfo}
-          updateEnableWatch={updateEnableWatch}
+          updateEnableWatch={this.handleUpdateEnableWatch}
           updateMockStarServer={updateMockStarServer}
         />
 
@@ -50,6 +61,10 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
   return {
+    loadMockStarDetail: () => {
+      return dispatch(loadMockStarDetail());
+    },
+
     clearNetworkList: () => {
       return dispatch(clearNetworkList());
     },
