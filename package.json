@@ -1,6 +1,6 @@
 {
   "name": "mockstar-devtools-extensions",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "private": true,
   "scripts": {
     "start": "craco start",
@@ -28,7 +28,7 @@
     "ejs": "^3.1.5",
     "less": "^2.7.3",
     "lodash": "^4.17.15",
-    "mockstar-generators": "^1.3.4",
+    "mockstar-generators": "^1.3.7",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-redux": "^5.1.2",
