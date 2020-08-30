@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-import { List, Tag, Card, Button } from 'antd';
+import { Button, Card, List, Space, Tag } from 'antd';
+import { ClearOutlined, RedoOutlined } from '@ant-design/icons';
 
 import './index.less';
 
 export default class PageHomeNetworkList extends Component {
 
   render() {
-    const { list, gotoDetailPage,clearList } = this.props;
+    const { list, gotoDetailPage, clearList, manualUpdate } = this.props;
 
     return (
       <div className="page-home-network-list">
         <Card title="xhr 或 fetch 请求"
-          extra={
-            <Button type="danger" onClick={clearList}
-                    >清空列表</Button>
-          }>
+              extra={
+                <Space>
+                  <Button type="primary" onClick={manualUpdate} icon={<RedoOutlined />}>手动刷新</Button>
+                  <Button type="danger" onClick={clearList} icon={<ClearOutlined />}>清空列表</Button>
+                </Space>
+              }
+        >
 
           <List
             footer={<div>总共{list.length}条数据</div>}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Tabs } from 'antd';
+import { Divider, Tabs } from 'antd';
 
 import TopHeader from './components/top-header';
 import RequestDetail from './components/request-detail';
@@ -58,6 +58,8 @@ class PageDetail extends Component {
     return (
       <div className="page-detail">
         <TopHeader currentNetwork={currentNetwork} gotoHomePage={this.gotoHomePage} />
+
+        <Divider />
 
         <Tabs defaultActiveKey={defaultActiveKey}>
           <Tabs.TabPane tab={`请求详情(序号=${id})`} key="request-detail">

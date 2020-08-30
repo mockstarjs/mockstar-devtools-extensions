@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Card, Col, Input, Row, Tree } from 'antd';
+import { CloudDownloadOutlined, DownloadOutlined } from '@ant-design/icons';
 
 import axios from 'axios';
 
@@ -7,9 +8,9 @@ import CreateMockerDlg from './create-mocker-dlg';
 import TopInfo from './top-info';
 
 import { createFolderTree, downloadSampleCode } from '../../business';
+import { NETWORK_CASE } from '../../../../datas/data-network';
 
 import './index.less';
-import { NETWORK_CASE } from '../../../../datas/data-network';
 
 export default class MockStarSample extends Component {
   constructor(...props) {
@@ -128,8 +129,12 @@ export default class MockStarSample extends Component {
                 <Col span={8}>
                   <Card title="样例文件目录"
                         extra={
-                          <Button type="primary" onClick={this.handleShowCreateMockerDlg}
-                                  disabled={!couldCreateMocker}>保存到项目中</Button>
+                          <Button
+                            type="primary"
+                            onClick={this.handleShowCreateMockerDlg}
+                            disabled={!couldCreateMocker}
+                            icon={< CloudDownloadOutlined />}
+                          >保存到项目中</Button>
                         }
                         style={{ minWidth: '300px' }}
                   >
@@ -146,7 +151,7 @@ export default class MockStarSample extends Component {
                   <Card title={`预览 ${(treeNode && treeNode.path)}`}
                         extra={<Button type="primary" onClick={() => {
                           this.handleDownload(treeNode);
-                        }}>单独下载该文件</Button>}
+                        }} icon={<DownloadOutlined />}>单独下载该文件</Button>}
                   >
                     <Input.TextArea
                       value={treeNode && treeNode.content}

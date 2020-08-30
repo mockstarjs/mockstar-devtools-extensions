@@ -19,6 +19,26 @@ class PageHome extends Component {
     this.props.history.push(`/detail/${id}`);
   };
 
+  handleManualUpdate = () => {
+    (async () => {
+      // 更新 enableWatch
+      const { enableWatch } = this.props.mockStarInfo;
+
+      if (enableWatch) {
+        // 如果是开启监听，则需要刷新一次 mockstar 状态
+        await this.props.loadMockStarDetail();
+      } else {
+        // 如果是关闭监听，则需要将 isStarted 设置为 false
+        this.props.updateIsStarted(false);
+      }
+
+      // 更新列表
+      this.props.list.forEach((networkRequest) => {
+        this.props.updateNetworkMockerItemData(networkRequest);
+      });
+    })();
+  };
+
   handleClear = () => {
     this.props.clearNetworkList();
   };
@@ -57,6 +77,7 @@ class PageHome extends Component {
         <PageHomeNetworkList
           list={list}
           clearList={this.handleClear}
+          manualUpdate={this.handleManualUpdate}
           gotoDetailPage={this.gotoDetailPage}
         />
       </div>

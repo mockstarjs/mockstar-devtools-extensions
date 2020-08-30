@@ -38,13 +38,13 @@ export default class PageHomeTopHeader extends Component {
 
         {
           mockStarInfo.enableWatch && mockStarInfo.isStarted ? (
-            <Alert message={`正在监听 ${mockStarInfo.server} ...`} type="success" />
+            <Alert message={`${mockStarInfo.server} 已启动，正在监听中 ...`} type="success" />
           ) : null
         }
 
         {
           mockStarInfo.enableWatch && !mockStarInfo.isStarted ? (
-            <Alert message={`${mockStarInfo.server} 并没有启动`} type="error" />
+            <Alert message={`${mockStarInfo.server} 并没有成功启动`} type="error" />
           ) : null
         }
 
