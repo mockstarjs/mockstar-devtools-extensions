@@ -20,7 +20,7 @@ export default class PageHomeHeader extends Component {
           type="link"
           style={{ marginLeft: '20px' }}
           onClick={() => {
-            window.open('https://mockstarjs.github.io/mockstar/');
+            window.open('https://mockstarjs.github.io/mockstar/tool/mockstar-devtools-extensions.html');
           }}
         >
           文档
