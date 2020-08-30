@@ -3,7 +3,7 @@ import { Button, Form, Input, message, Modal, Space } from 'antd';
 
 import './index.less';
 
-export default class MockStarSample extends Component {
+export default class MockStarSampleCreateMockerDlg extends Component {
   handleHideDlg = () => {
     this.props.changeShowCreateMockerDlg(false);
   };

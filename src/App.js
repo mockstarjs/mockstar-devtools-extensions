@@ -87,6 +87,7 @@ export default class App extends Component {
             marginTop: 64,
             display: 'flex',
             height: 'calc(100vh - 110px)',
+            overflow: 'scroll',
           }}
         >
           <Router>

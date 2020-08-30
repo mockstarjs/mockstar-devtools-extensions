@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Alert, Button, Card, Col, Input, Row, Tree } from 'antd';
+import { Button, Card, Col, Input, Row, Tree } from 'antd';
 
 import axios from 'axios';
 
 import CreateMockerDlg from './create-mocker-dlg';
+import TopInfo from './top-info';
 
 import { createFolderTree, downloadSampleCode } from '../../business';
 
@@ -104,17 +105,7 @@ export default class MockStarSample extends Component {
       <div className="page-detail-mockstar-sample">
         <Row>
           <Col span={24}>
-            {
-              currentNetwork.mockstar ? (
-                <Alert
-                  message={`当前接口已成功匹配 MockStar 桩对象：${currentNetwork.mockstar.mocker} ，且正使用其桩数据为： ${currentNetwork.mockstar.mockModule}，文件地址为 ${mockServerPath + '/' + currentNetwork.mockstar.mocker}，本样例代码仅做参考，更多操作请切换到 【MockStar简易操作】Tab 页。`}
-                  type="success" showIcon />
-              ) : (
-                <Alert message="当前接口尚未匹配 MockStar 桩对象（请先检查是否正确配置了代理），您可以选择将样例代码【保存到项目中】，亦可点击文件目录预览之后【单独下载该文件】。"
-                       type="info"
-                       showIcon />
-              )
-            }
+            <TopInfo currentNetwork={currentNetwork} mockServerPath={mockServerPath} />
           </Col>
 
           <Col span={8}>

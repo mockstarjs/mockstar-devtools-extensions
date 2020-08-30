@@ -37,7 +37,7 @@ export default class PageDetailTopHeader extends Component {
   };
 
   render() {
-    const { currentNetwork,gotoHomePage } = this.props;
+    const { currentNetwork, gotoHomePage } = this.props;
 
     return (
       <div className="page-detail-top-header">
@@ -49,15 +49,23 @@ export default class PageDetailTopHeader extends Component {
         >
           <Descriptions size="small" column={1}>
             <Descriptions.Item label="请求地址">{currentNetwork.request.url}</Descriptions.Item>
-            {
-              currentNetwork.mockstar ? (
-                <Descriptions.Item label="MockStar">
-                  <Tag color="#f50">{currentNetwork.mockstar.mocker}</Tag>
-                  <Tag color="#f50">{currentNetwork.mockstar.mockModule}</Tag>
-                </Descriptions.Item>
-              ) : null
-            }
           </Descriptions>
+          {
+            currentNetwork.mockerItem ? (
+              <>
+                <Tag color="#108ee9">已匹配：{currentNetwork.mockerItem.name}</Tag>
+              </>
+            ) : null
+          }
+
+          {
+            currentNetwork.mockstar ? (
+              <>
+                <Tag color="#f50">桩对象：{currentNetwork.mockstar.mocker}</Tag>
+                <Tag color="#f50">桩数据：{currentNetwork.mockstar.mockModule}</Tag>
+              </>
+            ) : null
+          }
         </PageHeader>
       </div>
     );
