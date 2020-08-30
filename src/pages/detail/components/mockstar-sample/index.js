@@ -108,7 +108,8 @@ export default class MockStarSample extends Component {
 
     const { treeData, treeNodeMap, businessMocker } = createFolderTree(currentNetwork);
     const treeNode = treeNodeMap[selectedTreeKey];
-    const couldCreateMocker = [NETWORK_CASE.NOT_MATCHED_NOT_MOCK].indexOf(currentNetwork.networkCase) > -1;
+
+    const couldCreateMocker = mockStarInfo.isStarted && [NETWORK_CASE.NOT_MATCHED_NOT_MOCK].indexOf(currentNetwork.networkCase) > -1;
     const couldShowSampleCode = [
       NETWORK_CASE.NOT_MATCHED_NOT_MOCK,
       NETWORK_CASE.MATCHED_NOT_MOCK,

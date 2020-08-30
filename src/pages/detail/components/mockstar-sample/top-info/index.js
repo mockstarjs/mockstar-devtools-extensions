@@ -30,16 +30,28 @@ export default class MockStarSampleTopInfo extends Component {
           {
             currentNetwork.networkCase === NETWORK_CASE.NOT_MATCHED_BUT_MOCK ? (
               <>
-                <Alert message={`检测到当前返回的是 MockStar 的桩数据，但是并无法在 ${mockStarInfo.server} 匹配！`} type="warning" />
+                <Alert
+                  message={`检测到当前返回的是 MockStar 的桩数据，${mockStarInfo.isStarted ? '但是无法在 ' + mockStarInfo.server + ' 中进行匹配！' : '由于未监听到有启动的 MockStar 服务，因此无法进行匹配！'}`}
+                  type="warning" />
                 <Divider />
               </>
             ) : null
           }
 
           {
-            currentNetwork.networkCase === NETWORK_CASE.NOT_MATCHED_NOT_MOCK ? (
+            mockStarInfo.isStarted && currentNetwork.networkCase === NETWORK_CASE.NOT_MATCHED_NOT_MOCK ? (
               <>
                 <Alert message={`如果您需要在 ${mockStarInfo.server} 创建桩对象，则可以点击【保存到项目中】，或者在文件目录中选择某一文件之后点击【单独下载该文件】`}
+                       type="info" />
+                <Divider />
+              </>
+            ) : null
+          }
+
+          {
+            !mockStarInfo.isStarted && currentNetwork.networkCase === NETWORK_CASE.NOT_MATCHED_NOT_MOCK ? (
+              <>
+                <Alert message={`MockStar 服务未启动！启动之后才支持点击【保存到项目中】。若不启动服务，则只支持【单独下载该文件】`}
                        type="info" />
                 <Divider />
               </>
