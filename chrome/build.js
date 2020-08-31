@@ -46,6 +46,7 @@ const releaseRootPath = path.join(workspaceRootPath, 'release');
   // 打包 crx
   generateCrx(unzipOutputPath);
 
+  // 压缩一个 zip 包
   await compress(unzipOutputPath, path.join(releaseRootPath, `MockStar-Chrome-Extensions-v${pkgInfo.version}.zip`));
 })();
 
