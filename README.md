@@ -12,6 +12,8 @@
 
 #### 1.2.1 自助构建
 
+> 注意，自助构建不是必须的，你也可以直接下载 `release/MockStar-Chrome-Extensions-vx.x.x.zip` 文件，解压之后可获得`chrome-extensions` 文件夹，可以直接使用，避免手动构建。
+
 将本仓库代码 clone 下来：
 
 ``` 
