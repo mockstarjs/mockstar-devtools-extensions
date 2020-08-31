@@ -1,8 +1,8 @@
-const fs = require('fs');
 const path = require('path');
 const shelljs = require('shelljs');
 const fse = require('fs-extra');
 const ChromeExtension = require('crx');
+const compressing = require('compressing');
 
 const pkgInfo = require('../package.json');
 
@@ -11,9 +11,14 @@ const chromePublicSrcPath = path.join(workspaceRootPath, 'chrome/public');
 const unzipOutputPath = path.join(workspaceRootPath, 'chrome-extensions');
 const releaseRootPath = path.join(workspaceRootPath, 'release');
 
-(function () {
-  // 创建文件夹
+(async () => {
+  // 清空产物输出文件夹
+  fse.removeSync(unzipOutputPath);
+  fse.removeSync(releaseRootPath);
+
+  // 创建产物输出文件夹
   fse.ensureDirSync(unzipOutputPath);
+  fse.ensureDirSync(releaseRootPath);
 
   // 删除文件
   shelljs.rm('-rf', unzipOutputPath);
@@ -40,6 +45,8 @@ const releaseRootPath = path.join(workspaceRootPath, 'release');
 
   // 打包 crx
   generateCrx(unzipOutputPath);
+
+  await compress(unzipOutputPath, path.join(releaseRootPath, `MockStar-Chrome-Extensions-v${pkgInfo.version}.zip`));
 })();
 
 // https://www.npmjs.com/package/crx
@@ -58,3 +65,38 @@ function generateCrx(unzipOutputPath) {
     });
 }
 
+// 压缩
+async function compress(outputPath, outputZipPath) {
+  // 如果该目录下已经存在该文件，则删除，避免重复打包
+  if (fse.pathExistsSync(outputZipPath)) {
+    fse.removeSync(outputZipPath);
+  }
+
+  // 待打包的目录
+  const source = outputPath;
+
+  // 临时目录，为避免和项目中文件夹重名，使用一个随机的文件夹名字
+  const tmpDir = path.join(source, `../tmp_${Date.now()}`);
+
+  // 临时拷贝待打包的目录，以 outputPath 名，注意需要去掉.号，避免 mac 等系统默认看不到解压文件
+  const tmpZipFolderPath = path.join(tmpDir, path.basename(outputPath).replace(/\./gi, ''));
+
+  // 临时打包出来的文件
+  const tmpOutputZipPath = path.join(tmpDir, path.basename(outputZipPath));
+
+  // 将 source 复制到待打包目录
+  fse.copySync(source, tmpZipFolderPath);
+
+  // 将待打包目录压缩zip
+  await compressing.zip.compressDir(tmpZipFolderPath, tmpOutputZipPath);
+
+  // 然后再移动目的地
+  fse.moveSync(tmpOutputZipPath, outputZipPath, {
+    overwrite: true,
+  });
+
+  // 最后要注意清理掉临时目录
+  fse.removeSync(tmpDir);
+
+  return outputZipPath;
+}
